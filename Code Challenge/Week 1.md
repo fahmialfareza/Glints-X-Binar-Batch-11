@@ -1,14 +1,18 @@
 # Code Challenge Week 01
-# Number 1
-Make two functions to calculate volume of geometry (such as cube, beam, tube, and so on)! You just need to choose two of those function! You need to upload to your repository on Gitlab! (geometry.js)
 
-Once you've done with it, submit your task in your repository `GlintsXBinar`, and it should follow this folder structure:
+# Number 1
+
+Make two functions to calculate volume of geometry (such as cube, beam, tube, and so on)! You just need to choose two of those function! You need to upload to your repository on Gitlab!
+
+Once you've done with it, submit your task (geometry.js) and .gif result of your task program in your repository `GlintsXBinar`, and it should follow this folder structure:
 
 ```bash
 /Week 1/Code Challenge/geometry.js
+/Week 1/Code Challenge/geometry.gif
 ```
 
 # Number 2
+
 Hello guys, looks like you've learned a little bit about Javascript. Now, I give you a challenge to sharpen your knowledge about what we have learn in this week!
 
 Let's get started!
@@ -21,10 +25,11 @@ You must create `greet()` function declaration. That function will return a stri
 Hello, Reza! Looks like you're 20 years old, and you lived in Magelang!
 ```
 
-Once you've done with it, submit your task in your repository `GlintsXBinar`, and it should follow this folder structure:
+Once you've done with it, submit your task (greet.js) and .gif result of your task program in your repository `GlintsXBinar`, and it should follow this folder structure:
 
 ```bash
 /Week 1/Code Challenge/greet.js
+/Week 1/Code Challenge/greet.gif
 ```
 
 ## Source Code
