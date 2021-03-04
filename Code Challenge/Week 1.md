@@ -1,5 +1,14 @@
 # Code Challenge Week 01
+# Number 1
+Make two functions to calculate volume of geometry (such as cube, beam, tube, and so on)! You just need to choose two of those function! You need to upload to your repository on Gitlab! (geometry.js)
 
+Once you've done with it, submit your task in your repository `GlintsXBinar`, and it should follow this folder structure:
+
+```bash
+/Week 1/Code Challenge/geometry.js
+```
+
+# Number 2
 Hello guys, looks like you've learned a little bit about Javascript. Now, I give you a challenge to sharpen your knowledge about what we have learn in this week!
 
 Let's get started!
@@ -9,25 +18,24 @@ Let's get started!
 You must create `greet()` function declaration. That function will return a string and log it to the terminal, and it should be like this:
 
 ```bash
-Hello, Fikri! Looks like you're 20 years old, and you lived in Surakarta!
+Hello, Reza! Looks like you're 20 years old, and you lived in Magelang!
 ```
 
 Once you've done with it, submit your task in your repository `GlintsXBinar`, and it should follow this folder structure:
 
 ```bash
-/'01. Basic Class'/'Code Challenge 01'/greet.js
-/'01. Basic Class'/'Code Challenge 01'/geometry.js
+/Week 1/Code Challenge/greet.js
 ```
 
 ## Source Code
 
 ```javascript
 // Importing Module
-const readline = require('readline');
+const readline = require("readline");
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout
-})
+  output: process.stdout,
+});
 
 // Code here!
 
@@ -45,26 +53,24 @@ const rl = readline.createInterface({
  * */
 function greet(name, address, birthday) {
   // Insert your code here!
-
 }
 
-
 // DON'T CHANGE
-console.log("Goverment Registry\n")
+console.log("Goverment Registry\n");
 // GET User's Name
-rl.question("What is your name? ",  name => {
+rl.question("What is your name? ", (name) => {
   // GET User's Address
-  rl.question("Which city do you live? ", address => {
+  rl.question("Which city do you live? ", (address) => {
     // GET User's Birthday
-    rl.question("When was your birthday year? ", birthday => {
-      greet(name, address, birthday)
+    rl.question("When was your birthday year? ", (birthday) => {
+      greet(name, address, birthday);
 
-      rl.close()
-    })
-  })
-})
+      rl.close();
+    });
+  });
+});
 
 rl.on("close", () => {
-  process.exit()
-})
+  process.exit();
+});
 ```
