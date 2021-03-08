@@ -70,5 +70,5 @@ function input() {
 
 console.log(`Rectangle`);
 console.log(`=========`);
-inputLength(); // Call way 1
-// input() // Call Alternative Way
+// inputLength(); // Call way 1
+input() // Call Alternative Way
