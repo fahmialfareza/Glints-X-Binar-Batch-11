@@ -1,3 +1,5 @@
+/* If we use callback function, we can't add another logic outside the function */
+
 // Import readline
 const readline = require("readline");
 const rl = readline.createInterface({
@@ -52,7 +54,9 @@ function inputHeight(length, width) {
 /* Alternative Way */
 // All input just in one code
 function input() {
-  rl.question("Length: ", (length) => {
+  rl.question("Length: ", function (length) {
+    length++;
+    console.log(length);
     rl.question("Width: ", (width) => {
       rl.question("Height: ", (height) => {
         if (!isNaN(length) && !isNaN(width) && !isNaN(height)) {
@@ -71,4 +75,4 @@ function input() {
 console.log(`Rectangle`);
 console.log(`=========`);
 // inputLength(); // Call way 1
-input() // Call Alternative Way
+input(); // Call Alternative Way

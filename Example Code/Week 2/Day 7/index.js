@@ -5,8 +5,12 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-const cuboid = require("./cuboid"); // import cuboid
-const cube = require("./cube"); // import cube
+const cuboid = require("./function/cuboid"); // import cuboid
+const cube = require("./function/cube"); // import cube
+
+function isEmptyOrSpaces(str) {
+  return str === null || str.match(/^ *$/) !== null;
+}
 
 // Function to display the menu
 function menu() {
@@ -39,3 +43,4 @@ function menu() {
 menu(); // call the menu function to display the menu
 
 module.exports.rl = rl; // export rl to make another can run the readline
+module.exports.isEmptyOrSpaces = isEmptyOrSpaces;

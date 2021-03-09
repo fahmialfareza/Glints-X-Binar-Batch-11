@@ -1,9 +1,5 @@
 // Import readline
-const readline = require("readline");
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
+const index = require("../index"); // Import index to run rl on this file
 
 // Function to calculate beam volume
 function beam(length, width, height) {
@@ -13,7 +9,7 @@ function beam(length, width, height) {
 /* Way 1 */
 // Function for inputing length of beam
 function inputLength() {
-  rl.question(`Length: `, (length) => {
+  index.rl.question(`Length: `, (length) => {
     if (!isNaN(length)) {
       inputWidth(length);
     } else {
@@ -25,7 +21,7 @@ function inputLength() {
 
 // Function for inputing width of beam
 function inputWidth(length) {
-  rl.question(`Width: `, (width) => {
+  index.rl.question(`Width: `, (width) => {
     if (!isNaN(width)) {
       inputHeight(length, width);
     } else {
@@ -37,10 +33,10 @@ function inputWidth(length) {
 
 // Function for inputing height of beam
 function inputHeight(length, width) {
-  rl.question(`Height: `, (height) => {
+  index.rl.question(`Height: `, (height) => {
     if (!isNaN(height)) {
-      console.log(`\nBeam: ${beam(length, width, height)}`);
-      rl.close();
+      console.log(`\nBeam: ${beam(length, width, height)}\n`);
+      index.rl.close();
     } else {
       console.log(`Height must be a number\n`);
       inputHeight(length, width);
@@ -52,12 +48,12 @@ function inputHeight(length, width) {
 /* Alternative Way */
 // All input just in one code
 function input() {
-  rl.question("Length: ", (length) => {
-    rl.question("Width: ", (width) => {
-      rl.question("Height: ", (height) => {
+  index.rl.question("Length: ", (length) => {
+    index.rl.question("Width: ", (width) => {
+      index.rl.question("Height: ", (height) => {
         if (!isNaN(length) && !isNaN(width) && !isNaN(height)) {
-          console.log(`\nBeam: ${beam(length, width, height)}`);
-          rl.close();
+          console.log(`\nBeam: ${beam(length, width, height)} \n`);
+          index.rl.close();
         } else {
           console.log(`Length, Width and Height must be a number\n`);
           input();
@@ -68,4 +64,4 @@ function input() {
 }
 /* End Alternative Way */
 
-module.exports = { inputLength, input }; // Export inputLength and input function, so another file can call it
+module.exports = { input, inputLength }; // Export inputLength and input function, so another file can call it
