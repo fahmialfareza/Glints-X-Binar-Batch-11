@@ -1,26 +1,18 @@
-let fridge = [
-  "Apple",
-  "Wortel",
-  "Milk",
-  "Orange",
-  "Leech",
-  "Cabbage",
-  "Egg"
-]
+let fridge = ["Apple", "Wortel", "Milk", "Orange", "Leech", "Cabbage", "Egg"];
 
 function checkTheEggAvailability() {
   console.clear();
-  console.log("Checking the egg availability...")
+  console.log("Checking the egg availability...");
 
   // Check the egg availability
   if (fridge.includes("Egg")) {
-    console.log("There's an egg")
-    return false
+    console.log("There's an egg");
+    return false;
   }
 
   // If we complete the loop and there's no egg
-  console.log("There's no egg")
-  return true
+  console.log("There's no egg");
+  return true;
 }
 
 // Function to handle if we have to go to market or not
@@ -49,8 +41,8 @@ function cookAnEgg() {
 
   // Check if we should go to the market or not
   goToTheMarket(shouldWeGoToTheMarket);
-  prepareTheFry()
+  prepareTheFry();
   fryTheEgg();
 }
 
-cookAnEgg()
+cookAnEgg();
