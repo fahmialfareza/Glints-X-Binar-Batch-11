@@ -12,11 +12,10 @@ function clean(data) {
 
 // Should return array
 function sortAscending(data) {
-  data = clean(data);
-
   // Code Here
+  data = clean(data);
   for (let i = 0; i < data.length; i++) {
-    for (let j = 0; j < data.length - i; j++) {
+    for (let j = 0; j < data.length - i - 1; j++) {
       if (data[j] > data[j + 1]) {
         [data[j], data[j + 1]] = [data[j + 1], data[j]];
       }
@@ -30,10 +29,8 @@ function sortAscending(data) {
 function sortDecending(data) {
   // Code Here
   data = clean(data);
-
-  // Code Here
   for (let i = 0; i < data.length; i++) {
-    for (let j = 0; j < data.length - i; j++) {
+    for (let j = 0; j < data.length - i - 1; j++) {
       if (data[j] < data[j + 1]) {
         [data[j], data[j + 1]] = [data[j + 1], data[j]];
       }

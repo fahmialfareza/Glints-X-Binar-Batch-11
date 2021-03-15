@@ -14,7 +14,7 @@ module.exports = (sortAscending, sortDecending, data) => {
 
       // Check the sortDecending
       let dsc = sortDecending(data);
-      for (let i = 0; i < asc.length; i++) {
+      for (let i = 0; i < dsc.length; i++) {
         if (dsc[i] < dsc[i + 1]) {
           error.push(sortDecending);
           break;
