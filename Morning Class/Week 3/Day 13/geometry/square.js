@@ -17,7 +17,8 @@ class Square extends TwoDimention {
     super.calculateArea();
     let area = this.length ** 2;
 
-    console.log(`This area is ${area} cm2 \n`);
+    // console.log(`This area is ${area} cm2 \n`);
+    return area;
   }
 
   calculateCircumference() {
