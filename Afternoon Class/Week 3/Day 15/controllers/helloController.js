@@ -3,8 +3,8 @@ class HelloController {
   // GET
   get(req, res) {
     console.log("This is my first backend!");
-    res.send(`Hello, Postman (GET), ${req.query.name}!`);
-    // res.send(`Hello, Postman (GET), ${req.params.name}!`);
+    // res.send(`Hello, Postman (GET), ${req.query.name}!`);
+    res.send(`Hello, Postman (GET), ${req.params.name}!`);
   }
 
   // POST

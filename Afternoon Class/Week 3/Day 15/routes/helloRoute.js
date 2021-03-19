@@ -3,7 +3,7 @@ const router = express.Router(); // Make a router
 const HelloController = require("../controllers/HelloController"); // Import HelloController
 
 // If user go to http://localhost:3000 (GET)
-router.get("/", HelloController.get);
+router.get("/:name", HelloController.get);
 
 // If user go to http://localhost:3000 (POST)
 router.post("/", HelloController.post);
