@@ -82,4 +82,46 @@ SELECT * FROM transaksi WHERE id = 3;
 /* SELECT ORDER BY */
 SELECT * FROM pelanggan ORDER BY nama;
 
+SELECT * FROM pemasok ORDER BY nama DESC;
+
 /* END SELECT ORDER BY */
+
+/* DELETE DATA */
+DELETE FROM pelanggan WHERE id = 117;
+
+DELETE FROM pelanggan WHERE nama = "Lia";
+
+DELETE FROM pelanggan WHERE id = 1;
+
+/* END DELETE DATA */
+
+/* DROP TABLE */
+DROP TABLE pemasok;
+
+/* END DROP TABLE*/
+
+/* UPDATE DATA */
+UPDATE pelanggan SET nama = "Najmul" WHERE id = 2;
+
+UPDATE barang SET nama = "Ronaldo", harga = 50000 WHERE id = 3;
+
+/* END UPDATE DATA */
+
+/* SELECT LIMIT */
+SELECT * FROM pelanggan ORDER BY nama DESC LIMIT 2;
+
+/* END SELECT LINIT */
+
+/* JOIN */
+SELECT t.id, p.nama as nama_pelanggan, b.nama as nama_barang, pem.nama as nama_pemasok, b.harga, t.waktu, t.jumlah, t.total 
+FROM transaksi t
+JOIN barang b ON t.id_barang = b.id
+JOIN pelanggan p ON p.id = t.id_pelanggan
+JOIN pemasok pem ON b.id_pemasok = pem.id
+
+/* END JOIN */
+
+/* SELECT LIKE */
+SELECT * FROM pelanggan WHERE nama LIKE '%bayu%';
+
+/* END SELECT LIKE */
