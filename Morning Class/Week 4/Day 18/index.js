@@ -1,14 +1,14 @@
-const express = require("express");
-const app = express();
+const express = require("express"); // Import express
+const app = express(); // Create express app
 
-// Import route
+// Import routes
 const transaksiRoutes = require("./routes/transaksiRoutes");
 
-// Use to read the req.body
-app.use(express.urlencoded({ extended: false }));
+// Use to read req.body
+app.use(express.urlencoded({ extended: true }));
 
-// Make route
+// Define route
 app.use("/transaksi", transaksiRoutes);
 
-// Server run on port 3000
-app.listen(3000, () => console.log("This server running on 3000"));
+// Server running on port 3000
+app.listen(3000, () => console.log("Server running on 3000!"));

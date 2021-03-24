@@ -1,7 +1,7 @@
 {
   "name": "day-18",
   "version": "1.0.0",
-  "description": "This is MySQL and Express.js",
+  "description": "This is first SQL and Express App",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

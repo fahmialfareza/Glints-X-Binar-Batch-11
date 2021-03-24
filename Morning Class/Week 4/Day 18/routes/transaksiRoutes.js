@@ -1,8 +1,11 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express"); // Import express
+const router = express.Router(); // Make a router
+
+// Import controller
 const transaksiController = require("../controllers/transaksiController");
 
-// If user go to http://localhost:3000/transaksi (GET)
+// Define routes
 router.get("/", transaksiController.getAll);
+router.post("/", transaksiController.create);
 
-module.exports = router;
+module.exports = router; // Export router

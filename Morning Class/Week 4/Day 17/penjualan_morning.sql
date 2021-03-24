@@ -125,3 +125,8 @@ JOIN pelanggan p ON p.id = t.id_pelanggan
 JOIN pemasok pem ON b.id_pemasok = pem.id
 
 /* END JOIN */
+
+/* SELECT LIKE */
+SELECT * FROM pelanggan WHERE nama LIKE "%yoga%";
+
+/* END SELECT LIKE */
