@@ -1,13 +1,14 @@
 const express = require("express");
 const app = express();
 
-// Import router
+// Import Router
 const transaksiRoutes = require("./routes/transaksiRoutes");
 
 // Use to read req.body
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
-// Make route
+// Define routes
 app.use("/transaksi", transaksiRoutes);
 
-app.listen(3000, () => console.log("Server running on 3000"));
+// Server running
+app.listen(3000, () => console.log("Server running on 3000!"));
