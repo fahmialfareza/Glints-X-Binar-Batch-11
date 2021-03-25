@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { getAllTransactions } from "../../actions/transactionActions";
+import TransactionItem from "./TransactionItem";
 
-const Transaction = () => {
+const Transaction = ({
+  transaction: { allTransactions },
+  getAllTransactions,
+}) => {
+  useEffect(() => {
+    getAllTransactions();
+  }, []);
+
   return (
     <div className="container mt-4">
-      <table class="table table-primary">
+      <table class="table table-primary rounded">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -13,16 +23,22 @@ const Transaction = () => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
+          {allTransactions &&
+            allTransactions.map((transaction, index) => (
+              <TransactionItem
+                key={transaction.id}
+                index={index}
+                transaction={transaction}
+              />
+            ))}
         </tbody>
       </table>
     </div>
   );
 };
 
-export default Transaction;
+const mapStateToProps = (state) => ({
+  transaction: state.transaction,
+});
+
+export default connect(mapStateToProps, { getAllTransactions })(Transaction);
