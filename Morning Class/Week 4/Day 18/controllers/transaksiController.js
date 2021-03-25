@@ -51,14 +51,47 @@ const create = (req, res) => {
           });
         }
 
-        // If success
-        return res.status(200).json({
-          message: "Success",
-          data: results,
+        // If Success
+        let sqlSelect = `SELECT t.id, p.nama as nama_pelanggan, b.nama as nama_barang, b.harga, pem.nama as nama_pemasok, t.waktu, t.jumlah, t.total FROM transaksi t JOIN barang b ON t.id_barang = b.id JOIN pelanggan p ON p.id = t.id_pelanggan JOIN pemasok pem ON b.id_pemasok = pem.id WHERE t.id = ${results.insertId}`;
+
+        // Run Select Query
+        connection.query(sqlSelect, (err, results) => {
+          // If error
+          if (err) {
+            return res.status(500).json({
+              message: "Internal Server Error",
+              error: err,
+            });
+          }
+
+          // If success
+          return res.status(200).json({
+            message: "Success",
+            data: results[0],
+          });
         });
       }
     );
   });
 };
 
-module.exports = { getAll, create }; // Export getAll function
+const deleteData = (req, res) => {
+  let sqlDelete = "DELETE FROM transaksi WHERE id = ?";
+
+  connection.query(sqlDelete, [req.params.id], (err, results) => {
+    // If error
+    if (err) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: err,
+      });
+    }
+
+    // If success
+    return res.status(200).json({
+      message: "Success",
+    });
+  });
+};
+
+module.exports = { getAll, create, deleteData }; // Export getAll function
