@@ -4,8 +4,6 @@ class BarangController {
   // Create barang
   async create(req, res) {
     try {
-      console.log(req.body);
-
       let createdData = await barang.create({
         nama: req.body.nama,
         harga: req.body.harga,
