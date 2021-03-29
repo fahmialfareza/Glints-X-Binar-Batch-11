@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     nama: DataTypes.STRING
   }, {
     sequelize,
-    paranoid: true, // Enable softdelete
-    timestamps: true, // enable timestamps
-    freezeTableName: true, // because we use bahasa
+    paranoid: true, // Activate soft delete
+    timestamps: true, // timestamps
+    freezeTableName: true, // because we use Indonesian
     modelName: 'pemasok',
   });
   return Pemasok;

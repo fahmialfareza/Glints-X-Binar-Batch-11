@@ -16,13 +16,20 @@ module.exports = (sequelize, DataTypes) => {
       nama: DataTypes.STRING,
       harga: DataTypes.DECIMAL,
       id_pemasok: DataTypes.INTEGER,
-      image: DataTypes.STRING,
+      image: {
+        type: DataTypes.STRING,
+        //Set custom getter for book image using URL
+        get() {
+          const image = this.getDataValue("image");
+          return "/images/" + image;
+        },
+      },
     },
     {
       sequelize,
-      paranoid: true, // Enable softdelete
-      timestamps: true, // enable timestamps
-      freezeTableName: true, // because we use bahasa
+      paranoid: true, // Activate soft delete
+      timestamps: true, // timestamps
+      freezeTableName: true, // because we use Indonesian
       modelName: "barang",
     }
   );

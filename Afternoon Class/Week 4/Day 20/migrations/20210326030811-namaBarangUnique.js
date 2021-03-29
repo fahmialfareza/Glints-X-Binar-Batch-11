@@ -2,7 +2,8 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.addConstraint("barang", {
+    // Make  barang nama unique
+    queryInterface.addConstraint("barang", {
       fields: ["nama"],
       type: "unique",
       name: "custom_unique_nama",

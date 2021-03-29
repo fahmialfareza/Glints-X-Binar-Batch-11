@@ -24,17 +24,20 @@ class TransaksiController {
         ],
       });
 
-      if (!data.length > 0) {
+      // If data is nothing
+      if (data.length === 0) {
         return res.status(404).json({
           message: "Transaksi Not Found",
         });
       }
 
+      // If success
       return res.status(200).json({
         message: "Success",
         data,
       });
     } catch (e) {
+      // If error
       return res.status(500).json({
         message: "Internal Server Error",
         error: e,
@@ -42,11 +45,13 @@ class TransaksiController {
     }
   }
 
+  // Get One transaksi
   getOne(req, res) {
     // Promise
+    // FindOne transaksi
     transaksi
       .findOne({
-        where: { id: req.params.id },
+        where: { id: `${req.params.id}` },
         attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
         include: [
           // Include is join
@@ -65,62 +70,40 @@ class TransaksiController {
         ],
       })
       .then((data) => {
+        // If transaksi not found
         if (!data) {
           return res.status(404).json({
             message: "Transaksi Not Found",
           });
         }
 
+        // If success
         return res.status(200).json({
           message: "Success",
-          data,
+          data: data,
         });
       })
-      .catch((err) => {
+      .catch((e) => {
+        // If error
         return res.status(500).json({
           message: "Internal Server Error",
-          error: err,
+          error: e,
         });
       });
   }
 
+  // Create Data
   async create(req, res) {
     try {
-      // Find barang and pelanggan
-      let findData = await Promise.all([
-        barang.findOne({ where: { id: req.body.id_barang } }),
-        pelanggan.findOne({ where: { id: req.body.id_pelanggan } }),
-      ]);
-
-      let errors = [];
-
-      // If barang not found
-      if (!findData[0]) {
-        errors.push("Barang Not Found");
-      }
-
-      // If pelanggan not found
-      if (!findData[1]) {
-        errors.push("Pelanggan Not Found");
-      }
-
-      // If errors.length > 0
-      if (errors.length > 0) {
-        return res.status(404).json({
-          message: errors.join(", "),
-        });
-      }
-
-      let price = findData[0].harga;
-      let total = eval(price * req.body.jumlah);
-
+      // Will create data
       let createdData = await transaksi.create({
         id_barang: req.body.id_barang,
         id_pelanggan: req.body.id_pelanggan,
         jumlah: req.body.jumlah,
-        total,
+        total: req.body.total,
       });
 
+      // Find the new transaksi
       let data = await transaksi.findOne({
         where: { id: createdData.id },
         attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
@@ -141,11 +124,91 @@ class TransaksiController {
         ],
       });
 
+      // If success
       return res.status(201).json({
         message: "Success",
         data,
       });
     } catch (e) {
+      // If error
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e,
+      });
+    }
+  }
+
+  // Update data
+  async update(req, res) {
+    let update = {
+      id_barang: req.body.id_barang,
+      id_pelanggan: req.body.id_pelanggan,
+      jumlah: req.body.jumlah,
+      total: req.body.total,
+    };
+
+    try {
+      // Transaksi table update data
+      let updatedData = await transaksi.update(update, {
+        where: {
+          id: req.params.id,
+        },
+      });
+
+      // Find the updated transaksi
+      let data = await transaksi.findOne({
+        where: { id: req.params.id },
+        attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
+        include: [
+          // Include is join
+          {
+            model: barang,
+            attributes: ["nama", "harga"], // just this attrubute from Barang that showed
+            include: [
+              // Include is join
+              { model: pemasok, attributes: ["nama"] },
+            ],
+          },
+          {
+            model: pelanggan,
+            attributes: ["nama"], // just this attrubute from Pelanggan that showed
+          },
+        ],
+      });
+
+      // If success
+      return res.status(201).json({
+        message: "Success",
+        data,
+      });
+    } catch (e) {
+      // If error
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e,
+      });
+    }
+  }
+
+  // Delete Data
+  async delete(req, res) {
+    try {
+      // Delete data
+      let data = await transaksi.destroy({ where: { id: req.params.id } });
+
+      // If data deleted is null
+      if (!data) {
+        return res.status(404).json({
+          message: "Transaksi Not Found",
+        });
+      }
+
+      // If success
+      return res.status(200).json({
+        message: "Success delete transaksi",
+      });
+    } catch (e) {
+      // If error
       return res.status(500).json({
         message: "Internal Server Error",
         error: e,

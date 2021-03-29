@@ -10,7 +10,6 @@ module.exports = {
       },
       nama: {
         allowNull: false,
-        unique: true,
         type: Sequelize.STRING,
       },
       harga: {
@@ -39,6 +38,7 @@ module.exports = {
       },
     });
 
+    // Make id_pemasok foreign key
     await queryInterface.addConstraint("barang", {
       fields: ["id_pemasok"],
       type: "foreign key",

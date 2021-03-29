@@ -38,6 +38,7 @@ module.exports = {
       },
     });
 
+    // Make id_barang foreign key
     await queryInterface.addConstraint("transaksi", {
       fields: ["id_barang"],
       type: "foreign key",
@@ -51,6 +52,7 @@ module.exports = {
       onUpdate: "cascade",
     });
 
+    // Make id_pelanggan foreign key
     await queryInterface.addConstraint("transaksi", {
       fields: ["id_pelanggan"],
       type: "foreign key",

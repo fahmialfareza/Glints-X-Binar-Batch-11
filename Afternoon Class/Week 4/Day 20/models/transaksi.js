@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
     total: DataTypes.DECIMAL
   }, {
     sequelize,
-    paranoid: true, // Enable softdelete
-    timestamps: true, // enable timestamps
-    freezeTableName: true, // because we use bahasa
+    paranoid: true, // Activate soft delete
+    timestamps: true, // timestamps
+    freezeTableName: true, // because we use Indonesian
     modelName: 'transaksi',
   });
   return Transaksi;

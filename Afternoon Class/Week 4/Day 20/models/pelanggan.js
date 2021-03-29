@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Pelanggan extends Model {
     /**
@@ -12,15 +10,18 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Pelanggan.init({
-    nama: DataTypes.STRING
-  }, {
-    sequelize,
-    paranoid: true, // Enable softdelete
-    timestamps: true, // enable timestamps
-    freezeTableName: true, // because we use bahasa
-    modelName: 'pelanggan',
-  });
+  }
+  Pelanggan.init(
+    {
+      nama: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      paranoid: true, // Activate soft delete
+      timestamps: true, // timestamps
+      freezeTableName: true, // because we use Indonesian
+      modelName: "pelanggan",
+    }
+  );
   return Pelanggan;
 };
