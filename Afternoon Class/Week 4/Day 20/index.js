@@ -17,6 +17,8 @@ app.use(
 // set static assets to public directory (usually for images, videos, and other files)
 app.use(express.static("public"));
 
+require("./utils/associations"); // Import table relationship
+
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
 
 // Server running
