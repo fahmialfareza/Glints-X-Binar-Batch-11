@@ -8,7 +8,7 @@ class BarangController {
         nama: req.body.nama,
         harga: req.body.harga,
         id_pemasok: req.body.id_pemasok,
-        image: req.body.image && req.body.image,
+        image: req.body.image ? req.body.image : null,
       });
 
       let data = await barang.findOne({

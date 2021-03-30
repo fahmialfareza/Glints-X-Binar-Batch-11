@@ -2,9 +2,9 @@ const multer = require("multer"); //multipar form-data
 const path = require("path"); // to detect path of directory
 const crypto = require("crypto"); // to encrypt something
 
-const uploadDir = "/images/"; // make images upload to /img/
+const uploadDir = "/images/"; // make images upload to /images/
 const storage = multer.diskStorage({
-  destination: "./public" + uploadDir, // make images upload to /public/img/
+  destination: "./public" + uploadDir, // make images upload to /public/images/
   filename: function (req, file, cb) {
     crypto.pseudoRandomBytes(16, function (err, raw) {
       // If an error
@@ -45,13 +45,13 @@ module.exports.imageUpload = (req, res, next) => {
     // If an error when uploading
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
-      return res.status(422).json({
-        error: err,
+      return res.status(400).json({
+        message: "File must be an image!",
       });
     } else if (err) {
       // An unknown error occurred when uploading.
-      return res.status(422).json({
-        error: err,
+      return res.status(400).json({
+        message: "File must be an image!",
       });
     }
 

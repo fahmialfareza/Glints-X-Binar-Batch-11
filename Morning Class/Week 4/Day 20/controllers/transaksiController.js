@@ -51,7 +51,7 @@ class TransaksiController {
     // FindOne transaksi
     transaksi
       .findOne({
-        where: { id: `${req.params.id}` },
+        where: { id: req.params.id },
         attributes: ["id", "jumlah", "total", ["createdAt", "waktu"]], // just these attributes that showed
         include: [
           // Include is join

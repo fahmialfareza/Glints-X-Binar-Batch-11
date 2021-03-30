@@ -42,16 +42,17 @@ const upload = multer({
 // Function to start uploading
 module.exports.imageUpload = (req, res, next) => {
   upload(req, res, (err) => {
+    console.log(err);
     // If an error when uploading
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading.
-      return res.status(422).json({
-        error: err,
+      return res.status(400).json({
+        message: "File must be an image",
       });
     } else if (err) {
       // An unknown error occurred when uploading.
-      return res.status(422).json({
-        error: err,
+      return res.status(400).json({
+        message: "File must be an image",
       });
     }
 
