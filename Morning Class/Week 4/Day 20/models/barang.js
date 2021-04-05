@@ -21,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
         //Set custom getter for book image using URL
         get() {
           const image = this.getDataValue("image");
+
+          if (!image) {
+            return image;
+          }
+
           return "/images/" + image;
         },
       },

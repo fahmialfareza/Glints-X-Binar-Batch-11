@@ -1,5 +1,5 @@
 const mongoose = require("mongoose"); // Import mongoose
-const mongooseDelete = require("mongoose-delete"); // Package to enable soft delete
+const mongooseDelete = require("mongoose-delete"); // Import mongoose-delete
 
 const PemasokSchema = new mongoose.Schema(
   {
@@ -9,9 +9,8 @@ const PemasokSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      default: null,
       required: false,
-      // Getter
+      default: null,
       get: getPhoto,
     },
   },
@@ -21,15 +20,20 @@ const PemasokSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toJSON: { getters: true }, // Enable getter
   }
 );
 
-// Image getter
+// Getter photo
 function getPhoto(photo) {
+  if (!photo) {
+    return null;
+  }
+
   return `/images/${photo}`;
 }
 
 // Enable soft delete
 PemasokSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-module.exports = mongoose.model("pemasok", PemasokSchema, "pemasok"); // Export model
+module.exports = mongoose.model("pemasok", PemasokSchema, "pemasok"); // Export barang models

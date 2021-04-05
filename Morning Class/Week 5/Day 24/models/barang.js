@@ -31,11 +31,16 @@ const BarangSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toJSON: { getters: true }, // Enable getter
   }
 );
 
 // Getter function for barang
 function getImage(image) {
+  if (!image) {
+    return null;
+  }
+
   return `/images/${image}`;
 }
 

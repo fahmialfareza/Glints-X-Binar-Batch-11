@@ -1,12 +1,12 @@
 const mongoose = require("mongoose"); // Import mongoose
-const mongooseDelete = require("mongoose-delete"); // Package to enable soft delete
+const mongooseDelete = require("mongoose-delete"); // Import mongoose-delete
 
 const BarangSchema = new mongoose.Schema(
   {
     nama: {
       type: String,
-      required: true,
       unique: true,
+      required: true,
     },
     harga: {
       type: Number,
@@ -31,15 +31,20 @@ const BarangSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toJSON: { getters: true }, // Enable getter
   }
 );
 
-// Image getter
+// Getter function for barang
 function getImage(image) {
+  if (!image) {
+    return null;
+  }
+
   return `/images/${image}`;
 }
 
 // Enable soft delete
 BarangSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-module.exports = mongoose.model("barang", BarangSchema, "barang"); // Export model
+module.exports = mongoose.model("barang", BarangSchema, "barang"); // Export barang models

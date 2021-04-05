@@ -1,5 +1,5 @@
-const mongoose = require("mongoose"); // Import mongoose
-const mongooseDelete = require("mongoose-delete"); // Import mongoose-delete
+const mongoose = require("mongoose");
+const mongooseDelete = require("mongoose-delete");
 
 const TransaksiSchema = new mongoose.Schema(
   {
@@ -32,4 +32,4 @@ const TransaksiSchema = new mongoose.Schema(
 // Enable soft delete
 TransaksiSchema.plugin(mongooseDelete, { overrideMethods: "all" });
 
-module.exports = mongoose.model("transaksi", TransaksiSchema, "transaksi"); // Export model
+module.exports = mongoose.model("transaksi", TransaksiSchema, "transaksi"); // Export barang models

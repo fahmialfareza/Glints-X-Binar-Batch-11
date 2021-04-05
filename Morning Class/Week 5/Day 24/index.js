@@ -6,6 +6,7 @@ const express = require("express");
 const fileUpload = require("express-fileupload");
 
 // Import routes
+const barangRoutes = require("./routes/barangRoutes");
 const transaksiRoutes = require("./routes/transaksiRoutes");
 
 // Make express app
@@ -26,6 +27,7 @@ app.use(fileUpload());
 app.use(express.static("public"));
 
 // Make routes
+app.use("/barang", barangRoutes);
 app.use("/transaksi", transaksiRoutes);
 
 // Running server

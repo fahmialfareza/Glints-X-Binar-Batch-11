@@ -1,8 +1,8 @@
 const mongoose = require("mongoose"); // Import mongoose
 
-const uri = process.env.MONGO_URI; // Add URI Mongo Atlas
+const uri = process.env.MONGO_URI; // Add URI MongoDB Atlas
 
-// Connect to mongoDB
+// Connect express to MongoDB with mongoose
 mongoose
   .connect(uri, {
     useUnifiedTopology: true, // Must be added
@@ -19,5 +19,4 @@ const pelanggan = require("./pelanggan");
 const pemasok = require("./pemasok");
 const transaksi = require("./transaksi");
 
-// Export models
-module.exports = { barang, pelanggan, pemasok, transaksi };
+module.exports = { barang, pelanggan, pemasok, transaksi }; // Export models

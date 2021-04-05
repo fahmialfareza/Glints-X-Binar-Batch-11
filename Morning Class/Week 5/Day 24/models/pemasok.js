@@ -20,11 +20,16 @@ const PemasokSchema = new mongoose.Schema(
       createdAt: "createdAt",
       updatedAt: "updatedAt",
     },
+    toJSON: { getters: true }, // Enable getter
   }
 );
 
 // Getter photo
 function getPhoto(photo) {
+  if (!photo) {
+    return null;
+  }
+
   return `/images/${photo}`;
 }
 
