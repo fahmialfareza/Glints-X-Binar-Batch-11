@@ -26,7 +26,7 @@ router.post(
       // If error
       if (err) {
         return res.status(500).json({
-          message: "Internal Server Erro",
+          message: "Internal Server Error",
           error: err,
         });
       }
