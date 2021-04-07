@@ -5,6 +5,38 @@ const JWTstrategy = require("passport-jwt").Strategy; // Import JWT Strategy
 const ExtractJWT = require("passport-jwt").ExtractJwt; // Import ExtractJWT
 const { user } = require("../../models"); // Import user model
 
+exports.signup = (req, res, next) => {
+  // It will go to ../middlewares/auth/index.js -> passport.use("signup")
+  passport.authenticate("signup", { session: false }, (err, user, info) => {
+    // After go to ../middlewares/auth/index.js -> passport.use("signup")
+    // It will bring the variable from done() function
+    // Like err = null, user = false, info = { message: "User can't be creted" }
+    // Or err = null, user = userSignUp, info = { message: "User can be creted" }
+
+    // If error
+    if (err) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: err,
+      });
+    }
+
+    // If user is false
+    if (!user) {
+      return res.status(401).json({
+        message: info.message,
+      });
+    }
+
+    // Make req.user that will be save the user value
+    // And it will bring to controller
+    req.user = user;
+
+    // Next to authController.getToken
+    next();
+  })(req, res, next);
+};
+
 // If user call this passport
 passport.use(
   "signup",
@@ -24,7 +56,7 @@ passport.use(
         // err = null
         // user = userSignUp
         // info = { message: "User can be creted" }
-        return done(null, `userSignUp`, {
+        return done(null, userSignUp, {
           message: "User can be created",
         });
       } catch (e) {
