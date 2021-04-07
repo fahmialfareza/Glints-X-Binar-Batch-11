@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const mongooseDelete = require("mongoose-delete");
+const bcrypt = require("bcrypt");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -15,6 +16,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+      set: encryptPassword,
     },
     role: {
       type: String,
@@ -30,6 +32,11 @@ const UserSchema = new mongoose.Schema(
     },
   }
 );
+
+function encryptPassword(password) {
+  const encryptPassword = bcrypt.hashSync(password, 10);
+  return encryptPassword;
+}
 
 // Enable soft delete
 UserSchema.plugin(mongooseDelete, { overrideMethods: "all" });
