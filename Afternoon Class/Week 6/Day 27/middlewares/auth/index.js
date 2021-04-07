@@ -121,19 +121,27 @@ passport.use(
 
         // If userSignIn is not exists
         if (!userSignIn) {
-          return res.status(401).json({
+          return done(null, false, {
             message: "Email not found",
           });
         }
 
         // Compare the password that we've inputed
+        let validate = await bcrypt.compare(password, userSignIn.password);
+
+        // If password is wrong
+        if (!validate) {
+          return done(null, false, {
+            message: "Wrong password",
+          });
+        }
 
         // If create user success, it will make
         // err = null
         // user = userSignUp
         // info = { message: "User can be creted" }
         return done(null, userSignIn, {
-          message: "User can be created",
+          message: "User can sign in",
         });
       } catch (e) {
         // If create user failed, it will make
@@ -141,7 +149,7 @@ passport.use(
         // user = false
         // info = { message: "User can't be creted" }
         return done(null, false, {
-          message: "User can't be created",
+          message: "User can't sign in",
         });
       }
     }
