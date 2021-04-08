@@ -6,22 +6,45 @@ const transaksiValidator = require("../middlewares/validators/transaksiValidator
 // Import controller
 const transaksiController = require("../controllers/transaksiController");
 
+// Import auth (middleware)
+const auth = require("../middlewares/auth");
+
 // Make router
 const router = express.Router();
 
 // Get all transaksi data
-router.get("/", transaksiController.getAll);
+router.get("/", auth.user, transaksiController.getAll);
 
 // Get one transaksi
-router.get("/:id", transaksiValidator.getOne, transaksiController.getOne);
+router.get(
+  "/:id",
+  auth.user,
+  transaksiValidator.getOne,
+  transaksiController.getOne
+);
 
 // Create transaksi
-router.post("/", transaksiValidator.create, transaksiController.create);
+router.post(
+  "/",
+  auth.admin,
+  transaksiValidator.create,
+  transaksiController.create
+);
 
 // Update transaksi
-router.put("/:id", transaksiValidator.update, transaksiController.update);
+router.put(
+  "/:id",
+  auth.admin,
+  transaksiValidator.update,
+  transaksiController.update
+);
 
 // Delete transaksi
-router.delete("/:id", transaksiValidator.delete, transaksiController.delete);
+router.delete(
+  "/:id",
+  auth.admin,
+  transaksiValidator.delete,
+  transaksiController.delete
+);
 
 module.exports = router;
