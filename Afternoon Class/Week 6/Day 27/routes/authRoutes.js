@@ -22,6 +22,11 @@ router.post(
 );
 
 // If user access /auth/signin (POST)
-router.post("/signin", auth.signin, authController.getToken);
+router.post(
+  "/signin",
+  authValidator.signin,
+  auth.signin,
+  authController.getToken
+);
 
 module.exports = router;

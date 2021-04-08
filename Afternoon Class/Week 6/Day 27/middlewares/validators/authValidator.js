@@ -36,3 +36,35 @@ exports.signup = async (req, res, next) => {
     });
   }
 };
+
+exports.signin = async (req, res, next) => {
+  try {
+    let errors = [];
+
+    // Check email
+    if (!validator.isEmail(req.body.email)) {
+      errors.push("Email field must be valid email");
+    }
+
+    // Check password strength
+    if (!validator.isStrongPassword(req.body.password)) {
+      errors.push(
+        "Password needs (uppercase & lowercase characters, number, and symbol)"
+      );
+    }
+
+    // If errors
+    if (errors.length > 0) {
+      return res.status(400).json({
+        message: errors.join(", "),
+      });
+    }
+
+    next();
+  } catch (e) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: e,
+    });
+  }
+};

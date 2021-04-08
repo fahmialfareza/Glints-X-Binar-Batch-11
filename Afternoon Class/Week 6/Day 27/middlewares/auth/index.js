@@ -200,6 +200,7 @@ passport.use(
         // Find user
         let userSignIn = await user.findOne({ _id: token.user.id });
 
+        // If user is admin
         if (userSignIn.role.includes("admin")) {
           return done(null, token.user);
         }
@@ -260,6 +261,7 @@ passport.use(
         // Find user
         let userSignIn = await user.findOne({ _id: token.user.id });
 
+        // If user has user role
         if (userSignIn.role.includes("user")) {
           return done(null, token.user);
         }
