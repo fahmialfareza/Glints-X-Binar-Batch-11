@@ -156,3 +156,64 @@ passport.use(
     }
   )
 );
+
+exports.admin = (req, res, next) => {
+  // It will go to ../middlewares/auth/index.js -> passport.use("signup")
+  passport.authorize("admin", (err, user, info) => {
+    // After go to ../middlewares/auth/index.js -> passport.use("signup")
+    // It will bring the variable from done() function
+    // Like err = null, user = false, info = { message: "User can't be creted" }
+    // Or err = null, user = userSignUp, info = { message: "User can be creted" }
+
+    // If error
+    if (err) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: err,
+      });
+    }
+
+    // If user is false
+    if (!user) {
+      return res.status(403).json({
+        message: info.message,
+      });
+    }
+
+    // Make req.user that will be save the user value
+    // And it will bring to controller
+    req.user = user;
+
+    // Next to authController.getToken
+    next();
+  })(req, res, next);
+};
+
+passport.use(
+  "admin",
+  new JWTstrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET, // JWT Key
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), // Get token from bearer
+    },
+    async (token, done) => {
+      try {
+        // Find user
+        const userLogin = await user.findOne({ _id: token.user.id });
+
+        // If user is admin
+        if (userLogin.role.includes("admin")) {
+          return done(null, token.user);
+        }
+
+        return done(null, false, {
+          message: "You're not authorized",
+        });
+      } catch (e) {
+        return done(null, false, {
+          message: "You're not authorized",
+        });
+      }
+    }
+  )
+);
