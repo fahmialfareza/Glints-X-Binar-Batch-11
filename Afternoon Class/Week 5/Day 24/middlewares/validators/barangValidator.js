@@ -81,7 +81,7 @@ exports.create = async (req, res, next) => {
 
           return res.status(500).json({
             message: "Internal Server Error",
-            error: err,
+            error: err.message,
           });
         }
       });
@@ -94,7 +94,7 @@ exports.create = async (req, res, next) => {
   } catch (e) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: e,
+      error: e.message,
     });
   }
 };

@@ -7,23 +7,30 @@ const TransactionItem = ({ transaction, index, deleteTransaction }) => {
   const onDelete = (event) => {
     event.preventDefault();
 
-    deleteTransaction(transaction.id);
+    deleteTransaction(transaction._id);
   };
 
   return (
-    <tr>
-      <th scope="row">{index + 1}</th>
-      <td>{transaction.nama_pelanggan}</td>
-      <td>{transaction.nama_barang}</td>
-      <td>
-        <Link to={`/${transaction.id}`} className="btn btn-primary btn-block">
-          Detail
-        </Link>
-        <button className="btn btn-danger btn-block" onClick={onDelete}>
-          Hapus
-        </button>
-      </td>
-    </tr>
+    <>
+      <tr>
+        <th scope="row">{index + 1}</th>
+        <td>
+          {transaction && transaction.pelanggan && transaction.pelanggan.nama}
+        </td>
+        <td>{transaction && transaction.barang && transaction.barang.nama}</td>
+        <td>
+          <Link
+            to={`/${transaction._id}`}
+            className="btn btn-primary btn-block"
+          >
+            Detail
+          </Link>
+          <button className="btn btn-danger btn-block" onClick={onDelete}>
+            Hapus
+          </button>
+        </td>
+      </tr>
+    </>
   );
 };
 

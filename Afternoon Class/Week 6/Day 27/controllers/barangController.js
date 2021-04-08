@@ -1,6 +1,22 @@
 const { barang, pelanggan, pemasok, transaksi } = require("../models");
 
 class BarangController {
+  async getAll(req, res) {
+    try {
+      let data = await barang.find().populate("pemasok");
+
+      return res.status(200).json({
+        message: "Success",
+        data,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e.message,
+      });
+    }
+  }
+
   async create(req, res) {
     try {
       // Create barang data
@@ -17,10 +33,9 @@ class BarangController {
         data,
       });
     } catch (e) {
-      console.error(e);
       return res.status(500).json({
         message: "Internal Server Error",
-        error: e,
+        error: e.message,
       });
     }
   }

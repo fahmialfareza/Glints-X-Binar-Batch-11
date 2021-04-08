@@ -1,38 +1,68 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { authSignOut } from "../../actions/authActions";
 
-const Header = () => {
+const Header = ({ user, authSignOut }) => {
+  const onSignOut = (event) => {
+    event.preventDefault();
+
+    authSignOut();
+  };
+
   return (
     <header>
-      <nav className="navbar navbar-dark bg-primary navbar-expand-lg">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-primary text-light p-0">
         <div className="container">
-          <Link class="navbar-brand" to="/">
+          <Link to="/" className="navbar-brand">
             Backend
           </Link>
           <button
-            className="navbar-toggler"
-            type="button"
+            class="navbar-toggler"
             data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            data-target="#navbarCollapse"
           >
-            <span className="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item active">
-                <Link className="nav-link" to="/">
-                  Transaksi <span className="sr-only">(current)</span>
-                </Link>
-              </li>
-            </ul>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            {user.isAuthenticated && (
+              <>
+                <ul class="navbar-nav">
+                  <li class="nav-item px-2">
+                    <Link to="/" class="nav-link active">
+                      Dashboard
+                    </Link>
+                  </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                    <a class="nav-link">
+                      <i class="fas fa-user"></i> Hello
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a onClick={onSignOut} class="nav-link">
+                      <i class="fas fa-user-times"></i> Logout
+                    </a>
+                  </li>
+                </ul>
+              </>
+            )}
           </div>
         </div>
       </nav>
+
+      <section id="actions" className="py-4 mb-4 bg-dark">
+        <div className="container">
+          <div className="row"></div>
+        </div>
+      </section>
     </header>
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps, { authSignOut })(Header);

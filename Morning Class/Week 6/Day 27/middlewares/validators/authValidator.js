@@ -33,7 +33,7 @@ exports.signup = async (req, res, next) => {
   } catch (e) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: e,
+      error: e.message,
     });
   }
 };
@@ -66,7 +66,7 @@ exports.signin = async (req, res, next) => {
   } catch (e) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: e,
+      error: e.message,
     });
   }
 };

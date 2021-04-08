@@ -24,4 +24,4 @@ app.use("/barang", barangRoutes); // if accessing localhost:3000/barang/* we wil
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
 
 // Server running
-app.listen(3000, () => console.log("server running on port 3000"));
+app.listen(5000, () => console.log("server running on port 3000"));

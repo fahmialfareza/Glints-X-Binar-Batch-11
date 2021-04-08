@@ -17,7 +17,7 @@ exports.signup = (req, res, next) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -84,7 +84,7 @@ exports.signin = (req, res, next) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -168,7 +168,7 @@ exports.admin = (req, res, next) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -229,7 +229,7 @@ exports.user = (req, res, next) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -263,6 +263,70 @@ passport.use(
 
         // If user has user role
         if (userSignIn.role.includes("user")) {
+          return done(null, token.user);
+        }
+
+        return done(null, false, {
+          message: "You're not authorized",
+        });
+      } catch (e) {
+        return done(null, false, {
+          message: "You're not authorized",
+        });
+      }
+    }
+  )
+);
+
+exports.adminOrUser = (req, res, next) => {
+  // It will go to ../middlewares/auth/index.js -> passport.use("signup")
+  passport.authorize("adminOrUser", (err, user, info) => {
+    // After go to ../middlewares/auth/index.js -> passport.use("signup")
+    // It will bring the variable from done() function
+    // Like err = null, user = false, info = { message: "User can't be creted" }
+    // Or err = null, user = userSignUp, info = { message: "User can be creted" }
+
+    // If error
+    if (err) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: err.message,
+      });
+    }
+
+    // If user is false
+    if (!user) {
+      return res.status(403).json({
+        message: info.message,
+      });
+    }
+
+    // Make req.user that will be save the user value
+    // And it will bring to controller
+    req.user = user;
+
+    // Next to authController.getToken
+    next();
+  })(req, res, next);
+};
+
+passport.use(
+  "adminOrUser",
+  new JWTstrategy(
+    {
+      secretOrKey: process.env.JWT_SECRET,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    },
+    async (token, done) => {
+      try {
+        // Find user
+        let userSignIn = await user.findOne({ _id: token.user.id });
+
+        // If user has user role
+        if (
+          userSignIn.role.includes("user") ||
+          userSignIn.role.includes("admin")
+        ) {
           return done(null, token.user);
         }
 

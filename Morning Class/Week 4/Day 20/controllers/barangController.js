@@ -19,7 +19,7 @@ class BarangController {
     } catch (e) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: e,
+        error: e.message,
       });
     }
   }
@@ -52,7 +52,7 @@ class BarangController {
     } catch (e) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: e,
+        error: e.message,
       });
     }
   }

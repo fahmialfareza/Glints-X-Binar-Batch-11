@@ -13,7 +13,7 @@ const getAll = (req, res) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -35,7 +35,7 @@ const getOne = (req, res) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 
@@ -65,7 +65,7 @@ const create = (req, res) => {
       if (err) {
         return res.status(500).json({
           message: "Internal Server Error",
-          error: err,
+          error: err.message,
         });
       }
 
@@ -78,7 +78,7 @@ const create = (req, res) => {
         if (err) {
           return res.status(500).json({
             message: "Internal Server Error",
-            error: err,
+            error: err.message,
           });
         }
 
@@ -107,7 +107,7 @@ const update = (req, res) => {
       if (err) {
         return res.status(500).json({
           message: "Internal Server Error",
-          error: err,
+          error: err.message,
         });
       }
 
@@ -120,7 +120,7 @@ const update = (req, res) => {
         if (err) {
           return res.status(500).json({
             message: "Internal Server Error",
-            error: err,
+            error: err.message,
           });
         }
 
@@ -144,7 +144,7 @@ const deleteData = (req, res) => {
     if (err) {
       return res.status(500).json({
         message: "Internal Server Error",
-        error: err,
+        error: err.message,
       });
     }
 

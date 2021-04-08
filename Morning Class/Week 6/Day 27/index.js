@@ -8,6 +8,7 @@ const fileUpload = require("express-fileupload");
 // Import routes
 const authRoutes = require("./routes/authRoutes");
 const barangRoutes = require("./routes/barangRoutes");
+const pelangganRoutes = require("./routes/pelangganRoutes");
 const transaksiRoutes = require("./routes/transaksiRoutes");
 
 // Make express app
@@ -29,8 +30,9 @@ app.use(express.static("public"));
 
 // Make routes
 app.use("/auth", authRoutes);
+app.use("/pelanggan", pelangganRoutes);
 app.use("/barang", barangRoutes);
 app.use("/transaksi", transaksiRoutes);
 
 // Running server
-app.listen(3000, () => console.log("Server running on 3000"));
+app.listen(5000, () => console.log("Server running on 3000"));

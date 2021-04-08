@@ -49,7 +49,7 @@ exports.create = async (req, res, next) => {
   } catch (e) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: e,
+      error: e.message,
     });
   }
 };
@@ -110,7 +110,7 @@ exports.update = async (req, res, next) => {
   } catch (e) {
     return res.status(500).json({
       message: "Internal Server Error",
-      error: e,
+      error: e.message,
     });
   }
 };

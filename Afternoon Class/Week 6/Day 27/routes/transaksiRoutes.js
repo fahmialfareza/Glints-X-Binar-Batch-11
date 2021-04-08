@@ -14,12 +14,12 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(auth.user, transaksiController.getAll)
+  .get(auth.adminOrUser, transaksiController.getAll)
   .post(auth.admin, transaksiValidator.create, transaksiController.create);
 
 router
   .route("/:id")
-  .get(auth.user, transaksiValidator.getOne, transaksiController.getOne)
+  .get(auth.adminOrUser, transaksiValidator.getOne, transaksiController.getOne)
   .put(auth.admin, transaksiValidator.update, transaksiController.update)
   .delete(auth.admin, transaksiValidator.delete, transaksiController.delete);
 

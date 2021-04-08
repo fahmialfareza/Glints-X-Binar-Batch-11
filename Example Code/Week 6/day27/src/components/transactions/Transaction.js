@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import Moment from 'react-moment';
-import 'moment/locale/id';
+import Moment from "react-moment";
+import "moment/locale/id";
 import { getOneTransaction } from "../../actions/transactionActions";
 
 const Transaction = ({
@@ -18,24 +18,37 @@ const Transaction = ({
       <div className="row">
         <div className="col-md-6 mx-auto">
           <div className="card text-dark bg-light text-center rounded">
-            <div className="card-header">
-              Transaksi #{currentTransaction && currentTransaction.id}
+            <div className="card-header bg-primary text-white">
+              Transaksi #{currentTransaction && currentTransaction._id}
             </div>
             <div className="card-body">
               <h5 className="card-title">
                 Dibeli oleh{" "}
-                {currentTransaction && currentTransaction.nama_pelanggan}
+                {currentTransaction && currentTransaction.pelanggan.nama}
               </h5>
               <p className="card-text">
-                Barang {currentTransaction && currentTransaction.nama_barang}{" "}
-                dengan harga Rp {currentTransaction && currentTransaction.harga}{" "}
+                Barang {currentTransaction && currentTransaction.barang.nama}{" "}
+                dengan harga Rp{" "}
+                {currentTransaction &&
+                  currentTransaction.barang.harga.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}{" "}
                 dengan jumlah {currentTransaction && currentTransaction.jumlah}{" "}
-                maka didapatkan total Rp{" "}
-                {currentTransaction && currentTransaction.total}
+                maka didapatkan total{" "}
+                {currentTransaction &&
+                  currentTransaction.total.toLocaleString("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                  })}
               </p>
             </div>
             <div className="card-footer text-muted">
-              Waktu: <Moment fromNow ago>{currentTransaction && currentTransaction.waktu}</Moment> yang lalu
+              Waktu:{" "}
+              <Moment fromNow ago>
+                {currentTransaction && currentTransaction.waktu}
+              </Moment>{" "}
+              yang lalu
             </div>
           </div>
         </div>
