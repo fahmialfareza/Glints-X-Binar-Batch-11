@@ -56,7 +56,6 @@ describe("Auth Test", () => {
       expect(res.body).toHaveProperty("token");
 
       authenticationToken = res.body.token;
-      console.log(authenticationToken);
     });
   });
 });
