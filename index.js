@@ -82,6 +82,12 @@ if (process.env.NODE_ENV === "development") {
 // Set static file directory
 app.use(express.static("public"));
 
+app.get("/", (req, res) => {
+  return res.redirect(
+    "https://documenter.getpostman.com/view/3884681/TzJphKGv"
+  );
+});
+
 // Make routes
 app.use("/auth", authRoutes);
 app.use("/pelanggan", pelangganRoutes);
