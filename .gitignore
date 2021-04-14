@@ -3,3 +3,5 @@
 .env.test
 node_modules
 config.json
+access.log
+coverage
