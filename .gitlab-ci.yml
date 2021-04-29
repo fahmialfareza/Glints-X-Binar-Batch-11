@@ -16,8 +16,7 @@ test:
   stage: test
   # Config to use GitLab Shared Runner with Executor Docker
   tags:
-    - docker
-    - gce
+    - gitlab-org-docker
   script:
     - echo "MYSQL_USERNAME"=$MYSQL_USERNAME > .env.test
     - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.test
