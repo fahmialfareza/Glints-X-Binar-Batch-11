@@ -11,7 +11,7 @@ cache:
 # Test job
 test:
   # Docker image
-  image: node:14
+  image: node:14-alpine
   # Attach Test job to Test stage
   stage: test
   # Config to use GitLab Shared Runner with Executor Docker
@@ -48,7 +48,7 @@ deploy:
     - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.production
     - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_PRODUCTION >> .env.production
     - echo "MYSQL_HOST"=$MYSQL_HOST >> .env.production
-    - yarn i
+    - yarn install
     - NODE_ENV=production sequelize db:create # create database test
     - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
