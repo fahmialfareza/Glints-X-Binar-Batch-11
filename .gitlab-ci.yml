@@ -23,11 +23,11 @@ test:
     - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_TEST >> .env.test
     - echo "MYSQL_HOST"=$MYSQL_HOST >> .env.test
     - yarn install
-    - NODE_ENV=test sequelize db:create # create database test
-    - NODE_ENV=test sequelize db:migrate # create migration
-    - NODE_ENV=test sequelize db:seed:all # seed all seeders data
+    - NODE_ENV=test npx sequelize db:create # create database test
+    - NODE_ENV=test npx sequelize db:migrate # create migration
+    - NODE_ENV=test npx sequelize db:seed:all # seed all seeders data
     - yarn run test
-    - NODE_ENV=test sequelize db:drop # drop database after testing
+    - NODE_ENV=test npx sequelize db:drop # drop database after testing
   # Defines the names of branches and tags the job runs for
   only:
     - ci-cd-sequelize
