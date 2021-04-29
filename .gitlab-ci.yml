@@ -20,7 +20,7 @@ test:
   script:
     - echo "MYSQL_USERNAME"=$MYSQL_USERNAME > .env.test
     - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.test
-    - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_TEST > .env.test
+    - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_TEST >> .env.test
     - echo "MYSQL_HOST"=$MYSQL_HOST >> .env.test
     - yarn install
     - NODE_ENV=test sequelize db:create # create database test
@@ -46,7 +46,7 @@ deploy:
     - cd $PROJECT_DIR
     - echo "MYSQL_USERNAME"=$MYSQL_USERNAME > .env.production
     - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.production
-    - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_PRODUCTION > .env.production
+    - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_PRODUCTION >> .env.production
     - echo "MYSQL_HOST"=$MYSQL_HOST >> .env.production
     - yarn i
     - NODE_ENV=production sequelize db:create # create database test
