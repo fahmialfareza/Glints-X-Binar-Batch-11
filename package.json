@@ -1,0 +1,27 @@
+{
+  "name": "day-20",
+  "version": "1.0.0",
+  "description": "This is sequelize",
+  "main": "index.js",
+  "scripts": {
+    "dev": "NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=100000 --coverage --forceExit",
+    "stop": "NODE_ENV=production forever stop index.js || true",
+    "start": "NODE_ENV=production forever start index.js"
+  },
+  "author": "Reza",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.2",
+    "validator": "^13.5.2"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "jest": "^26.6.3",
+    "supertest": "^6.1.3"
+  }
+}

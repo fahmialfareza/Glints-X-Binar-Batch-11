@@ -1,5 +1,4 @@
-.DS_Store
+node_modules/
+public/
 .env.development
 .env.test
-node_modules
-config.json
