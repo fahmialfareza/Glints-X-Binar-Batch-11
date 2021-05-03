@@ -8,15 +8,10 @@ const connection = new MongoClient(uri, {
 }); // Make new connection
 
 // Run the connection
-try {
-  connection.connect();
-
-  // If connection succeed
-  console.log("MongoDB connected!");
-} catch (e) {
-  // If connection error
-  console.error(e);
-}
+connection
+  .connect()
+  .then(() => console.log("MongoDB connected!"))
+  .catch((error) => console.error(error.message));
 
 // Export connection
 module.exports = connection;
