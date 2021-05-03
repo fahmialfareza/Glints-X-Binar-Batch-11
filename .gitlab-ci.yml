@@ -27,6 +27,7 @@ test:
     - echo "S3_BUCKET"=$S3_BUCKET_TEST >> .env.test
     - echo "S3_URL"=$S3_URL_TEST >> .env.test
     - yarn install
+    - NODE_ENV=test npx sequelize db:drop # drop database before testing
     - NODE_ENV=test npx sequelize db:create # create database test
     - NODE_ENV=test npx sequelize db:migrate # create migration
     - NODE_ENV=test npx sequelize db:seed:all # seed all seeders data
