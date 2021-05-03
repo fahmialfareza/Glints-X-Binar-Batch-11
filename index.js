@@ -3,7 +3,16 @@ require("dotenv").config({
 });
 // Express
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const app = express();
+
+// Security Packages
+const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
+const helmet = require("helmet");
+const cors = require("cors");
+const morgan = require("morgan");
 
 // Import routes
 const barangRoutes = require("./routes/barangRoutes");
@@ -16,6 +25,48 @@ app.use(
     extended: true,
   })
 ); // support encoded bodies
+
+// To read form-data request
+app.use(fileUpload());
+
+// Prevent XSS attact
+app.use(xss());
+
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 mins
+  max: 60,
+});
+
+app.use(limiter);
+
+// Prevent http param pollution
+app.use(hpp());
+
+// Use helmet
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
+
+// CORS
+app.use(cors());
+
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+} else {
+  // create a write stream (in append mode)
+  let accessLogStream = fs.createWriteStream(
+    path.join(__dirname, "access.log"),
+    {
+      flags: "a",
+    }
+  );
+
+  // setup the logger
+  app.use(morgan("combined", { stream: accessLogStream }));
+}
 
 // set static assets to public directory (usually for images, videos, and other files)
 app.use(express.static("public"));

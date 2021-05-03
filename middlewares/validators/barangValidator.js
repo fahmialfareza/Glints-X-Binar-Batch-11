@@ -3,14 +3,13 @@ const validator = require("validator");
 
 module.exports.create = async (req, res, next) => {
   try {
+    let errors = [];
     // Find Pemasok
     let findPemasok = await pemasok.findOne({
       where: {
         id: req.body.id_pemasok,
       },
     });
-
-    let errors = [];
 
     // Pemasok not found
     if (!findPemasok) {
@@ -29,6 +28,8 @@ module.exports.create = async (req, res, next) => {
         message: errors.join(", "),
       });
     }
+
+    req.body.directory = "barang";
 
     // It means that will be go to the next middleware
     next();

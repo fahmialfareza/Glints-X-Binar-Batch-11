@@ -27,12 +27,7 @@ class BarangController {
   // Create barang
   async create(req, res) {
     try {
-      let createdData = await barang.create({
-        nama: req.body.nama,
-        harga: req.body.harga,
-        id_pemasok: req.body.id_pemasok,
-        image: req.body.image ? req.body.image : null,
-      });
+      let createdData = await barang.create(req.body);
 
       let data = await barang.findOne({
         where: {

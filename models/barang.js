@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
             return image;
           }
 
-          return "/images/" + image;
+          return process.env.S3_URL + "/" + image;
         },
       },
     },

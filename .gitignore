@@ -2,3 +2,5 @@ node_modules/
 public/
 .env.development
 .env.test
+Rewind Class/
+coverage

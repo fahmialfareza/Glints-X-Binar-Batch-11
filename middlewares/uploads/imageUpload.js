@@ -1,63 +1,97 @@
-const multer = require("multer"); //multipar form-data
 const path = require("path"); // to detect path of directory
 const crypto = require("crypto"); // to encrypt something
+// Import required AWS SDK clients and commands for Node.js
+const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
-const uploadDir = "/images/"; // make images upload to /images/
-const storage = multer.diskStorage({
-  destination: "./public" + uploadDir, // make images upload to /public/images/
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
-      // If an error
-      if (err) return cb(err);
+// Set the AWS region
+const REGION = "ap-southeast-1"; //e.g. "us-east-1"
 
-      // encrypt filename and save it into the /public/img/ directory
-      cb(null, raw.toString("hex") + path.extname(file.originalname));
-    });
+// Set the parameters.
+const uploadParams = (directory, filename, body, mimetype) => {
+  return {
+    ACL: "public-read",
+    Bucket: process.env.S3_BUCKET,
+    Key: `${directory}/${filename}`,
+    Body: body,
+    ContentType: mimetype,
+  };
+};
+
+// Create Amazon S3 service client object.
+const s3 = new S3Client({
+  region: REGION,
+  credentials: {
+    accessKeyId: process.env.S3_ACCESS_KEY,
+    secretAccessKey: process.env.S3_SECRET_KEY,
   },
 });
 
-// Function to check file is image or not
-// More detail you can check multer documentation
-function fileFilter(req, file, cb) {
-  if (
-    file.mimetype == "image/jpeg" ||
-    file.mimetype == "image/png" ||
-    file.mimetype == "image/gif" ||
-    file.mimetype == "image/bmp"
-  ) {
-    // If file type is image it will pass
-    cb(null, true);
-  } else {
-    // If file type is not image it will make error
-    cb(new Error("File must be an image!"), false);
+const run = async (directory, filename, body, mimetype) => {
+  try {
+    const data = await s3.send(
+      new PutObjectCommand(uploadParams(directory, filename, body, mimetype))
+    );
+
+    return directory + "/" + filename;
+  } catch (err) {
+    console.log("Error", err);
   }
-}
+};
 
-// Function to start upload image
-const upload = multer({
-  fileFilter: fileFilter, // filter file first
-  storage: storage, // If filter no error, go to storage function
-}).single("image");
+exports.uploadImage = async (req, res, next) => {
+  try {
+    // Initialita
+    let errors = [];
 
-// Function to start uploading
-module.exports.imageUpload = (req, res, next) => {
-  upload(req, res, (err) => {
-    // If an error when uploading
-    if (err instanceof multer.MulterError) {
-      // A Multer error occurred when uploading.
-      return res.status(400).json({
-        message: "File must be an image!",
-      });
-    } else if (err) {
-      // An unknown error occurred when uploading.
-      return res.status(400).json({
-        message: "File must be an image!",
-      });
+    // If image was uploaded
+    if (req.files) {
+      const file = req.files.image;
+
+      // Make sure image is photo
+      if (!file.mimetype.startsWith("image")) {
+        errors.push("File must be an image");
+      }
+
+      // If errors length > 0, it will make errors message
+      if (errors.length > 0) {
+        // Because bad request
+        return res.status(400).json({
+          message: errors.join(", "),
+        });
+      }
+
+      // Check file size (max 1MB)
+      if (file.size > 1000000) {
+        errors.push("Image must be less than 1MB");
+      }
+
+      // If errors length > 0, it will make errors message
+      if (errors.length > 0) {
+        // Because bad request
+        return res.status(400).json({
+          message: errors.join(", "),
+        });
+      }
+
+      // Create custom filename
+      let fileName = crypto.randomBytes(16).toString("hex");
+
+      // Rename the file
+      file.name = `${fileName}${path.parse(file.name).ext}`;
+
+      // Upload image to /public/images
+      req.body.image = await run(
+        req.body.directory,
+        file.name,
+        file.data,
+        file.mimetype
+      );
     }
 
-    // If everythings is well fine, it will go to next middleware
-    if (req.file) req.body.image = req.file.filename;
-
     next();
-  });
+  } catch (e) {
+    return res.status(500).json({
+      message: e.message,
+    });
+  }
 };

@@ -2,7 +2,7 @@ const express = require("express"); // Import express
 const router = express.Router(); // Make a router
 
 // Import middlewares
-const { imageUpload } = require("../middlewares/uploads/imageUpload");
+const { uploadImage } = require("../middlewares/uploads/imageUpload");
 const barangValidator = require("../middlewares/validators/barangValidator");
 
 // Import controller
@@ -14,6 +14,6 @@ router.get("/", barangController.getAll);
 // If POST (/barang), will go to imageUpload first
 // Then, go to transaksiValidator.create
 // If in the transaksiValidator.create can run the next(), it will go to transaksiController.create
-router.post("/", imageUpload, barangValidator.create, barangController.create);
+router.post("/", barangValidator.create, uploadImage, barangController.create);
 
 module.exports = router; // Export router
