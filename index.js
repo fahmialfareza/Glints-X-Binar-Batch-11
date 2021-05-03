@@ -1,6 +1,8 @@
 require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 });
+const fs = require("fs");
+const path = require("path");
 // Express
 const express = require("express");
 const fileUpload = require("express-fileupload");
