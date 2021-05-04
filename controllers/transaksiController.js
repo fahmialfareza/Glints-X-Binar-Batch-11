@@ -131,7 +131,7 @@ class TransaksiController {
 
       // To define start time
       let now = moment().tz("Asia/Jakarta");
-      now = now.format().replace("T", " ").replace("+07", " +07");
+      now = now.format().replace("T", " ").replace("+07:00", " +0700");
 
       let parameter = {
         transaction_details: {
