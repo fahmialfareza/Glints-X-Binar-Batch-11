@@ -116,6 +116,7 @@ class TransaksiController {
   async create(req, res) {
     try {
       // Will create data
+      req.body.expiredPayment = moment(Date.now() + 10 * 60 * 1000);
       let createdData = await transaksi.create(req.body);
 
       // Create Snap API instance
