@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Transaksi extends Model {
     /**
@@ -12,18 +10,25 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
     }
-  };
-  Transaksi.init({
-    id_barang: DataTypes.INTEGER,
-    id_pelanggan: DataTypes.INTEGER,
-    jumlah: DataTypes.INTEGER,
-    total: DataTypes.DECIMAL
-  }, {
-    sequelize,
-    paranoid: true, // Activate soft delete
-    timestamps: true, // timestamps
-    freezeTableName: true, // because we use Indonesian
-    modelName: 'transaksi',
-  });
+  }
+  Transaksi.init(
+    {
+      id_barang: DataTypes.INTEGER,
+      id_pelanggan: DataTypes.INTEGER,
+      jumlah: DataTypes.INTEGER,
+      total: DataTypes.DECIMAL,
+      status: DataTypes.ENUM("pending", "failed", "success"),
+      expiredPayment: DataTypes.DATE,
+      token: DataTypes.STRING,
+      redirect_url: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      paranoid: true, // Activate soft delete
+      timestamps: true, // timestamps
+      freezeTableName: true, // because we use Indonesian
+      modelName: "transaksi",
+    }
+  );
   return Transaksi;
 };

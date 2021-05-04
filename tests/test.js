@@ -16,11 +16,7 @@ describe("Transaksi Test", () => {
     it("It should get all transaksi data", async () => {
       const res = await request(app).get("/transaksi");
 
-      expect(res.statusCode).toEqual(200);
-      expect(res.body).toBeInstanceOf(Object);
-      expect(res.body).toHaveProperty("message");
-      expect(res.body.message).toEqual("Success");
-      expect(res.body).toHaveProperty("data");
+      expect(res.statusCode).toEqual(403);
     });
   });
 });

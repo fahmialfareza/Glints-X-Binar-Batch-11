@@ -11,15 +11,22 @@ const transaksiController = require("../controllers/transaksiController");
 const auth = require("../middlewares/auth");
 
 // If GET (/transaksi), will go to getAll function in transaksiController class
-// router.get("/", auth.adminOrUser, transaksiController.getAll);
-router.get("/", transaksiController.getAll);
+router.get("/", auth.adminOrUser, transaksiController.getAll);
+// router.get("/", transaksiController.getAll);
 
 // If GET (/transaksi/:id), will go to getOne function in transaksiController
 router.get("/:id", transaksiController.getOne);
 
 // If POST (/transaksi), will go to transaksiValidator.create first
 // If in the transaksiValidator.create can run the next(), it will go to transaksiController.create
-router.post("/", transaksiValidator.create, transaksiController.create);
+router.post(
+  "/",
+  auth.user,
+  transaksiValidator.create,
+  transaksiController.create
+);
+
+router.post("/handlePayment", transaksiController.handlePayment);
 
 // If POST (/transaksi), will go to transaksiValidator.create first
 // If in the transaksiValidator.create can run the next(), it will go to transaksiController.create
