@@ -1,4 +1,5 @@
 const midtransClient = require("midtrans-client");
+const moment = require("moment-timezone");
 const { transaksi, barang, pelanggan, pemasok, user } = require("../models"); // Import all models
 
 class TransaksiController {
@@ -128,6 +129,10 @@ class TransaksiController {
         where: { id: req.user.id },
       });
 
+      // To define start time
+      let now = moment().tz("Asia/Jakarta");
+      now = now.format().replace("T", " ").replace("+07", " +07");
+
       let parameter = {
         transaction_details: {
           order_id: createdData.id,
@@ -144,7 +149,7 @@ class TransaksiController {
           finish: "https://sequelize.gabatch11.my.id",
         },
         expiry: {
-          start_time: new Date(Date.now()),
+          start_time: now,
           unit: "minutes",
           duration: 2,
         },
