@@ -24,24 +24,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DECIMAL,
       },
-      status: {
-        allowNull: false,
-        defaultValue: "pending",
-        type: Sequelize.ENUM("pending", "failed", "success"),
-      },
-      expiredPayment: {
-        allowNull: false,
-        defaultValue: new Date(Date.now() + 10 * 60 * 1000),
-        type: Sequelize.DATE,
-      },
-      token: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
-      redirect_url: {
-        allowNull: true,
-        type: Sequelize.STRING,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
