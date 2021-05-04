@@ -27,6 +27,32 @@ class TransaksiController {
     }
   }
 
+  // Get all deleted transaksi
+  async getAllDeleted(req, res) {
+    try {
+      // Find all deleted data
+      let data = await transaksi.findDeleted();
+
+      // If no data
+      if (data.length === 0) {
+        return res.status(404).json({
+          message: "No transaksi deleted",
+        });
+      }
+
+      // If success
+      return res.status(200).json({
+        message: "Success",
+        data,
+      });
+    } catch (e) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e.message,
+      });
+    }
+  }
+
   // Get One
   async getOne(req, res) {
     try {
@@ -117,6 +143,34 @@ class TransaksiController {
 
       return res.status(200).json({
         message: "Success",
+      });
+    } catch (e) {
+      return res.status(500).json({
+        message: "Internal Server Error",
+        error: e.message,
+      });
+    }
+  }
+
+  // Restore transaksi
+  async restore(req, res) {
+    try {
+      // Restore data
+      let data = await transaksi.restore({ _id: req.params.id });
+
+      // If data not found
+      if (!data) {
+        return res.status(404).json({
+          message: "Transaksi Not Found",
+        });
+      }
+
+      data = await transaksi.findById(req.params.id);
+
+      // If success
+      return res.status(200).json({
+        message: "Success",
+        data,
       });
     } catch (e) {
       return res.status(500).json({

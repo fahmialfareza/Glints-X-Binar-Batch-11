@@ -212,3 +212,46 @@ exports.delete = async (req, res, next) => {
     });
   }
 };
+
+exports.restore = async (req, res, next) => {
+  try {
+    let errors = [];
+
+    // Check params is valid or not
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      errors.push(
+        "id_transaksi is not valid and must be 24 character & hexadecimal"
+      );
+    }
+
+    // If params error
+    if (errors.length > 0) {
+      return res.status(400).json({
+        message: errors.join(", "),
+      });
+    }
+
+    // Find one transaksi
+    let data = await transaksi.findOneDeleted({ _id: req.params.id });
+
+    // If transaksi not found
+    if (!data) {
+      errors.push("Transaksi is not deleted");
+    }
+
+    // If error
+    if (errors.length > 0) {
+      return res.status(400).json({
+        message: errors.join(", "),
+      });
+    }
+
+    // Go to next
+    next();
+  } catch (e) {
+    return res.status(500).json({
+      message: "Internal Server Error",
+      error: e.message,
+    });
+  }
+};

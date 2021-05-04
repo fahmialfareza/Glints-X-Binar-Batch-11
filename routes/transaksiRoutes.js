@@ -17,11 +17,19 @@ router
   .get(auth.adminOrUser, transaksiController.getAll)
   .post(auth.admin, transaksiValidator.create, transaksiController.create);
 
+router.get("/deleted", transaksiController.getAllDeleted);
+
 router
   .route("/:id")
   .get(auth.adminOrUser, transaksiValidator.getOne, transaksiController.getOne)
   .put(auth.admin, transaksiValidator.update, transaksiController.update)
   .delete(auth.admin, transaksiValidator.delete, transaksiController.delete);
+
+router.put(
+  "/restore/:id",
+  transaksiValidator.restore,
+  transaksiController.restore
+);
 
 // Get all transaksi data
 // router.get("/", auth.user, transaksiController.getAll);
