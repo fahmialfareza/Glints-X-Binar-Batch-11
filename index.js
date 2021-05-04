@@ -17,6 +17,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 // Import routes
+const authRoutes = require("./routes/authRoutes");
 const barangRoutes = require("./routes/barangRoutes");
 const transaksiRoutes = require("./routes/transaksiRoutes");
 
@@ -76,6 +77,7 @@ app.use(express.static("public"));
 // Import table relationship
 require("./utils/associations");
 
+app.use("/auth", authRoutes);
 app.use("/barang", barangRoutes); // if accessing localhost:3000/barang/* we will go to barangRoutes
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
 

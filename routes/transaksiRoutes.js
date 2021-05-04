@@ -7,8 +7,11 @@ const transaksiValidator = require("../middlewares/validators/transaksiValidator
 // Import controller
 const transaksiController = require("../controllers/transaksiController");
 
+// Import auth (middleware)
+const auth = require("../middlewares/auth");
+
 // If GET (/transaksi), will go to getAll function in transaksiController class
-router.get("/", transaksiController.getAll);
+router.get("/", auth.adminOrUser, transaksiController.getAll);
 
 // If GET (/transaksi/:id), will go to getOne function in transaksiController
 router.get("/:id", transaksiController.getOne);
