@@ -144,8 +144,9 @@ class TransaksiController {
           finish: "https://sequelize.gabatch11.my.id",
         },
         expiry: {
+          start_time: Date.now(),
           unit: "minutes",
-          duration: 10,
+          duration: 2,
         },
       };
 

@@ -9,7 +9,7 @@ module.exports = {
     });
     await queryInterface.addColumn("transaksi", "expiredPayment", {
       allowNull: false,
-      defaultValue: new Date(Date.now() + 10 * 60 * 1000),
+      defaultValue: new Date(Date.now() + 2 * 60 * 1000),
       type: Sequelize.DATE,
     });
     await queryInterface.addColumn("transaksi", "token", {
