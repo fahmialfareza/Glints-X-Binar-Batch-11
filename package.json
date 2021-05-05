@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon index.js",
-    "test": "cross-env NODE_ENV=test jest --testTimeout=100000 --coverage --forceExit",
+    "test": "NODE_ENV=test jest --testTimeout=100000 --coverage --forceExit",
     "stop": "NODE_ENV=production forever stop index.js || true",
     "start": "NODE_ENV=production forever start index.js"
   },

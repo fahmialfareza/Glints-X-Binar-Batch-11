@@ -124,53 +124,55 @@ class TransaksiController {
         .replace("Z", "");
       let createdData = await transaksi.create(req.body);
 
-      // Create Snap API instance
-      let snap = new midtransClient.Snap({
-        // Set to true if you want Production Environment (accept real transaction).
-        isProduction: false,
-        serverKey: process.env.MIDTRANS_SERVER_KEY,
-      });
+      if (process.env.NODE_ENV !== "test") {
+        // Create Snap API instance
+        let snap = new midtransClient.Snap({
+          // Set to true if you want Production Environment (accept real transaction).
+          isProduction: false,
+          serverKey: process.env.MIDTRANS_SERVER_KEY,
+        });
 
-      let userMakeTransaction = await user.findOne({
-        where: { id: req.user.id },
-      });
+        let userMakeTransaction = await user.findOne({
+          where: { id: req.user.id },
+        });
 
-      // To define start time
-      let now = moment().tz("Asia/Jakarta");
-      now = now.format().replace("T", " ").replace("+07:00", " +0700");
+        // To define start time
+        let now = moment().tz("Asia/Jakarta");
+        now = now.format().replace("T", " ").replace("+07:00", " +0700");
 
-      let parameter = {
-        transaction_details: {
-          order_id: createdData.id,
-          gross_amount: req.body.total,
-        },
-        customer_details: {
-          email: userMakeTransaction.email,
-          phone: "+621234567890",
-        },
-        credit_card: {
-          secure: true,
-        },
-        callbacks: {
-          finish: "https://sequelize.gabatch11.my.id",
-        },
-        expiry: {
-          start_time: now,
-          unit: "minutes",
-          duration: 2,
-        },
-      };
+        let parameter = {
+          transaction_details: {
+            order_id: createdData.id,
+            gross_amount: req.body.total,
+          },
+          customer_details: {
+            email: userMakeTransaction.email,
+            phone: "+621234567890",
+          },
+          credit_card: {
+            secure: true,
+          },
+          callbacks: {
+            finish: "https://sequelize.gabatch11.my.id",
+          },
+          expiry: {
+            start_time: now,
+            unit: "minutes",
+            duration: 2,
+          },
+        };
 
-      let midtransResponse = await snap.createTransaction(parameter);
+        let midtransResponse = await snap.createTransaction(parameter);
 
-      // Update transaksi to create midtrans token and redirect url
-      await transaksi.update(
-        {
-          token: midtransResponse.token,
-          redirect_url: midtransResponse.redirect_url,
-        },
-        { where: { id: createdData.id } }
-      );
+        // Update transaksi to create midtrans token and redirect url
+        await transaksi.update(
+          {
+            token: midtransResponse.token,
+            redirect_url: midtransResponse.redirect_url,
+          },
+          { where: { id: createdData.id } }
+        );
+      }
 
       // Find the new transaksi
       let data = await transaksi.findOne({
@@ -208,9 +210,8 @@ class TransaksiController {
         data,
       });
     } catch (e) {
-      console.log(e);
       // If error
-      console.log(e);
+      console.log(e.message);
       return res.status(500).json({
         message: "Internal Server Error",
         error: e.message,
