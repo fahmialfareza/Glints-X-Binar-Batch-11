@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Transaksi.init(
     {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
       id_barang: DataTypes.INTEGER,
       id_pelanggan: DataTypes.INTEGER,
       jumlah: DataTypes.INTEGER,

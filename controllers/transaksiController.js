@@ -116,7 +116,12 @@ class TransaksiController {
   async create(req, res) {
     try {
       // Will create data
-      req.body.expiredPayment = moment(Date.now() + 10 * 60 * 1000);
+      let expired = moment(Date.now() + 2 * 60 * 1000);
+      req.body.expiredPayment = expired
+        .tz("UTC")
+        .format()
+        .replace("T", " ")
+        .replace("Z", "");
       let createdData = await transaksi.create(req.body);
 
       // Create Snap API instance
@@ -203,7 +208,9 @@ class TransaksiController {
         data,
       });
     } catch (e) {
+      console.log(e);
       // If error
+      console.log(e);
       return res.status(500).json({
         message: "Internal Server Error",
         error: e.message,
