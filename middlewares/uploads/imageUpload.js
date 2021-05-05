@@ -52,14 +52,6 @@ exports.uploadImage = async (req, res, next) => {
         errors.push("File must be an image");
       }
 
-      // If errors length > 0, it will make errors message
-      if (errors.length > 0) {
-        // Because bad request
-        return res.status(400).json({
-          message: errors.join(", "),
-        });
-      }
-
       // Check file size (max 1MB)
       if (file.size > 1000000) {
         errors.push("Image must be less than 1MB");
@@ -68,9 +60,7 @@ exports.uploadImage = async (req, res, next) => {
       // If errors length > 0, it will make errors message
       if (errors.length > 0) {
         // Because bad request
-        return res.status(400).json({
-          message: errors.join(", "),
-        });
+        return next({ message: errors.join(", "), statusCode: 400 });
       }
 
       // Create custom filename
@@ -90,8 +80,6 @@ exports.uploadImage = async (req, res, next) => {
 
     next();
   } catch (e) {
-    return res.status(500).json({
-      message: e.message,
-    });
+    return next(e);
   }
 };

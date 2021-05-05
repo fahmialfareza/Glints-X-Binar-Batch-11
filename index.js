@@ -6,6 +6,8 @@ const path = require("path");
 // Express
 const express = require("express");
 const fileUpload = require("express-fileupload");
+const errorHandler = require("./middlewares/errorHandler");
+
 const app = express();
 
 // Security Packages
@@ -80,6 +82,8 @@ require("./utils/associations");
 app.use("/auth", authRoutes);
 app.use("/barang", barangRoutes); // if accessing localhost:3000/barang/* we will go to barangRoutes
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
+
+app.use(errorHandler);
 
 // Server running
 if (process.env.NODE_ENV !== "test") {

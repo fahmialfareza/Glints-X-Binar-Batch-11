@@ -4,7 +4,7 @@ const { transaksi, barang, pelanggan, pemasok, user } = require("../models"); //
 
 class TransaksiController {
   // Get all transaksi data
-  async getAll(req, res) {
+  async getAll(req, res, next) {
     try {
       let data = await transaksi.findAll({
         // find all data of Transaksi table
@@ -37,9 +37,7 @@ class TransaksiController {
 
       // If data is nothing
       if (data.length === 0) {
-        return res.status(404).json({
-          message: "Transaksi Not Found",
-        });
+        return next({ message: "Transaksi Not Found", statusCode: 404 });
       }
 
       // If success
@@ -49,15 +47,12 @@ class TransaksiController {
       });
     } catch (e) {
       // If error
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 
   // Get One transaksi
-  getOne(req, res) {
+  getOne(req, res, next) {
     // Promise
     // FindOne transaksi
     transaksi
@@ -92,9 +87,7 @@ class TransaksiController {
       .then((data) => {
         // If transaksi not found
         if (!data) {
-          return res.status(404).json({
-            message: "Transaksi Not Found",
-          });
+          return next({ message: "Transaksi Not Found", statusCode: 404 });
         }
 
         // If success
@@ -105,15 +98,12 @@ class TransaksiController {
       })
       .catch((e) => {
         // If error
-        return res.status(500).json({
-          message: "Internal Server Error",
-          error: e.message,
-        });
+        return next(e);
       });
   }
 
   // Create Data
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       // Will create data
       let expired = moment(Date.now() + 2 * 60 * 1000);
@@ -211,16 +201,12 @@ class TransaksiController {
       });
     } catch (e) {
       // If error
-      console.log(e.message);
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 
   // Update data
-  async update(req, res) {
+  async update(req, res, next) {
     let update = {
       id_barang: req.body.id_barang,
       id_pelanggan: req.body.id_pelanggan,
@@ -273,24 +259,19 @@ class TransaksiController {
       });
     } catch (e) {
       // If error
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 
   // Delete Data
-  async delete(req, res) {
+  async delete(req, res, next) {
     try {
       // Delete data
       let data = await transaksi.destroy({ where: { id: req.params.id } });
 
       // If data deleted is null
       if (!data) {
-        return res.status(404).json({
-          message: "Transaksi Not Found",
-        });
+        return next({ message: "Transaksi Not Found", statusCode: 404 });
       }
 
       // If success
@@ -299,15 +280,12 @@ class TransaksiController {
       });
     } catch (e) {
       // If error
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 
   // Handle payment gateway
-  async handlePayment(req, res) {
+  async handlePayment(req, res, next) {
     try {
       let orderId = req.body.order_id;
       let transactionStatus = req.body.transaction_status;
@@ -432,10 +410,7 @@ class TransaksiController {
       });
     } catch (e) {
       // If error
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 }

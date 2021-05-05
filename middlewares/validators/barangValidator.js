@@ -24,9 +24,7 @@ module.exports.create = async (req, res, next) => {
     // If errors length > 0, it will make errors message
     if (errors.length > 0) {
       // Because bad request
-      return res.status(400).json({
-        message: errors.join(", "),
-      });
+      return next({ message: errors.join(", "), statusCode: 400 });
     }
 
     req.body.directory = "barang";
@@ -34,9 +32,6 @@ module.exports.create = async (req, res, next) => {
     // It means that will be go to the next middleware
     next();
   } catch (e) {
-    return res.status(500).json({
-      message: "Internal Server Error",
-      error: e.message,
-    });
+    return next(e);
   }
 };

@@ -2,7 +2,7 @@ const { barang, pelanggan, pemasok } = require("../models"); // Import all model
 
 class BarangController {
   // Get all
-  async getAll(req, res) {
+  async getAll(req, res, next) {
     try {
       let data = await barang.findAll({
         attributes: ["id", "harga", "image", "createdAt", "updatedAt"],
@@ -17,15 +17,12 @@ class BarangController {
         data,
       });
     } catch (e) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 
   // Create barang
-  async create(req, res) {
+  async create(req, res, next) {
     try {
       let createdData = await barang.create(req.body);
 
@@ -45,10 +42,7 @@ class BarangController {
         data,
       });
     } catch (e) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 }

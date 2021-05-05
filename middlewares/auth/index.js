@@ -15,17 +15,12 @@ exports.signup = (req, res, next) => {
 
     // If error
     if (err) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message,
-      });
+      return next(err);
     }
 
     // If user is false
     if (!user) {
-      return res.status(401).json({
-        message: info.message,
-      });
+      return next({ message: info.message, statusCode: 401 });
     }
 
     // Make req.user that will be save the user value
@@ -82,17 +77,12 @@ exports.signin = (req, res, next) => {
 
     // If error
     if (err) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message,
-      });
+      return next(err);
     }
 
     // If user is false
     if (!user) {
-      return res.status(401).json({
-        message: info.message,
-      });
+      return next({ message: info.message, statusCode: 401 });
     }
 
     // Make req.user that will be save the user value
@@ -167,17 +157,12 @@ exports.admin = (req, res, next) => {
 
     // If error
     if (err) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message,
-      });
+      return next(err);
     }
 
     // If user is false
     if (!user) {
-      return res.status(403).json({
-        message: info.message,
-      });
+      return next({ message: info.message, statusCode: 403 });
     }
 
     // Make req.user that will be save the user value
@@ -228,17 +213,12 @@ exports.user = (req, res, next) => {
 
     // If error
     if (err) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message,
-      });
+      return next(err);
     }
 
     // If user is false
     if (!user) {
-      return res.status(403).json({
-        message: info.message,
-      });
+      return next({ message: info.message, statusCode: 403 });
     }
 
     // Make req.user that will be save the user value
@@ -289,17 +269,12 @@ exports.adminOrUser = (req, res, next) => {
 
     // If error
     if (err) {
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: err.message,
-      });
+      return next(err);
     }
 
     // If user is false
     if (!user) {
-      return res.status(403).json({
-        message: info.message,
-      });
+      return next({ message: info.message, statusCode: 403 });
     }
 
     // Make req.user that will be save the user value

@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken"); // import jsonwebtoken
 
 class AuthController {
-  async getToken(req, res) {
+  async getToken(req, res, next) {
     try {
       // Get the req.user that has been created in the authRoutes
       // And create body variable
@@ -23,12 +23,7 @@ class AuthController {
         token,
       });
     } catch (e) {
-      console.log(e);
-      // If error
-      return res.status(500).json({
-        message: "Internal Server Error",
-        error: e.message,
-      });
+      return next(e);
     }
   }
 }
