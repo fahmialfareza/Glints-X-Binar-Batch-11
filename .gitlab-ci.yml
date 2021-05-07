@@ -61,7 +61,7 @@ deploy:
     - NODE_ENV=production sequelize db:create # create database test
     - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
-    - yarn run stop
-    - yarn run start
+    - npm run stop
+    - npm run start
   only:
     - ci-cd-sequelize
