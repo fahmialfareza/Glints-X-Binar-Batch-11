@@ -3,11 +3,6 @@ stages:
   - test
   - deploy
 
-# Config cache
-cache:
-  paths:
-    - node_modules/
-
 # Test job
 test:
   # Docker image
