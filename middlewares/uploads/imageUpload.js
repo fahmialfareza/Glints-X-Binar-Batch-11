@@ -1,5 +1,6 @@
 const path = require("path"); // to detect path of directory
 const crypto = require("crypto"); // to encrypt something
+const sharp = require("sharp");
 // Import required AWS SDK clients and commands for Node.js
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3");
 
@@ -68,13 +69,37 @@ exports.uploadImage = async (req, res, next) => {
 
       // Rename the file
       file.name = `${fileName}${path.parse(file.name).ext}`;
+      file.nameCompress = `${fileName}-compress${path.parse(file.name).ext}`;
 
+      // Upload original one
       // Upload image to /public/images
       req.body.image = await run(
         req.body.directory,
         file.name,
         file.data,
         file.mimetype
+      );
+
+      // Upload compress image
+      if (file.mimetype === "image/png") {
+        file.dataCompress = await sharp(file.data)
+          .rotate()
+          .resize(512)
+          .png()
+          .toBuffer();
+      } else {
+        file.dataCompress = await sharp(file.data)
+          .rotate()
+          .resize(512)
+          .jpeg({ mozjpeg: true })
+          .toBuffer();
+      }
+
+      await run(
+        req.body.directory,
+        file.nameCompress,
+        file.dataCompress,
+        "image/png"
       );
     }
 

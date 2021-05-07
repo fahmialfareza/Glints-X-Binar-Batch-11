@@ -1,6 +1,7 @@
 node_modules/
-public/
+public/images/
 .env.development
 .env.test
 Rewind Class/
 coverage
+.DS_Store

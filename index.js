@@ -22,6 +22,7 @@ const morgan = require("morgan");
 const authRoutes = require("./routes/authRoutes");
 const barangRoutes = require("./routes/barangRoutes");
 const transaksiRoutes = require("./routes/transaksiRoutes");
+const downloadRoutes = require("./routes/downloadRoutes");
 
 //Set body parser for HTTP post operation
 app.use(express.json()); // support json encoded bodies
@@ -82,6 +83,7 @@ require("./utils/associations");
 app.use("/auth", authRoutes);
 app.use("/barang", barangRoutes); // if accessing localhost:3000/barang/* we will go to barangRoutes
 app.use("/transaksi", transaksiRoutes); // if accessing localhost:3000/transaksi/* we will go to transaksiRoutes
+app.use("/download", downloadRoutes);
 
 app.use(errorHandler);
 
