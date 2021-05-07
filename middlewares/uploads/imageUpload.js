@@ -87,18 +87,20 @@ exports.uploadImage = async (req, res, next) => {
           .resize(512)
           .png()
           .toBuffer();
+        file.mimetypeCompress = "image/png";
       } else {
         file.dataCompress = await sharp(file.data)
           .rotate()
           .resize(512)
           .jpeg({ mozjpeg: true })
           .toBuffer();
+        file.mimetypeCompress = "image/jpeg";
       }
 
       await run(
         req.body.directory,
         file.nameCompress,
-        file.dataCompress,
+        file.mimetypeCompress,
         "image/png"
       );
     }
