@@ -4,9 +4,9 @@ stages:
   - deploy
 
 # Config cache
-cache:
-  paths:
-    - node_modules/
+# cache:
+#   paths:
+#     - node_modules/
 
 # Test job
 test:
@@ -49,7 +49,7 @@ deploy:
     - ci-cd-sequelize
   script:
     # Only copy changed files to project folder
-    - cp -r -u * $PROJECT_DIR
+    - cp -r -u * .sequelizerc $PROJECT_DIR
     - cd $PROJECT_DIR
     - echo "MYSQL_USERNAME"=$MYSQL_USERNAME > .env.production
     - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.production
