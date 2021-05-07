@@ -100,8 +100,8 @@ exports.uploadImage = async (req, res, next) => {
       await run(
         req.body.directory,
         file.nameCompress,
-        file.mimetypeCompress,
-        "image/png"
+        file.dataCompress,
+        file.mimetypeCompress
       );
     }
 
