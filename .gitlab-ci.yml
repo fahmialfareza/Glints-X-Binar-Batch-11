@@ -56,7 +56,8 @@ deploy:
     - echo "S3_URL"=$S3_URL_PRODUCTION >> .env.production
     - echo "JWT_SECRET"=$JWT_SECRET >> .env.production
     - echo "MIDTRANS_SERVER_KEY"=$MIDTRANS_SERVER_KEY >> .env.production
-    - yarn install
+    # - yarn install
+    - npm i
     - NODE_ENV=production sequelize db:create # create database test
     - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
