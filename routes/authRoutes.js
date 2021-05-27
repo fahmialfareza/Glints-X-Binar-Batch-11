@@ -51,7 +51,7 @@ router.get(
   "/google/callback",
   passport.authenticate("google", {
     session: false,
-    failureRedirect: "/auth/signin",
+    failureRedirect: process.env.OAUTH_CALLBACK_FRONTEND + "/auth/signin",
   }),
   authController.getToken
 );

@@ -1,6 +1,6 @@
 const passport = require("passport"); // Import passport
-const LocalStrategy = require("passport-local").Strategy; // Import LocalStrategy
 const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import GoogleStrategy
+const TwitterStrategy = require("passport-twitter").Strategy;
 const bcrypt = require("bcrypt"); // Import bcrypt (excrypt and comparePassword)
 const JWTstrategy = require("passport-jwt").Strategy; // Import JWT Strategy
 const ExtractJWT = require("passport-jwt").ExtractJwt; // Import ExtractJWT
@@ -340,7 +340,9 @@ passport.use(
           },
         });
 
-        return done(null, userGoogle[0]);
+        let userSignIn = { ...userGoogle[0], method: "oauth" };
+
+        return done(null, userSignIn);
       } catch (error) {
         return done(null, false, {
           message: "You're not authorized",

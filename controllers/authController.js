@@ -7,7 +7,7 @@ class AuthController {
       // And create body variable
       const body = {
         user: {
-          id: req.user.id,
+          id: req.user.dataValues.id,
         },
       };
 
@@ -16,6 +16,12 @@ class AuthController {
       const token = jwt.sign(body, process.env.JWT_SECRET, {
         expiresIn: "60d",
       });
+
+      if (req.user.method === "oauth") {
+        return res.redirect(
+          process.env.OAUTH_CALLBACK_FRONTEND + "/signin?token=" + token
+        );
+      }
 
       // If success
       return res.status(200).json({
