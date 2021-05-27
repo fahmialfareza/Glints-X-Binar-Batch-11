@@ -20,6 +20,8 @@ const uploadParams = (directory, filename, body, mimetype) => {
 
 // Create Amazon S3 service client object.
 const s3 = new S3Client({
+  signatureVersion: "v4",
+  s3ForcePathStyle: "true",
   region: REGION,
   credentials: {
     accessKeyId: process.env.S3_ACCESS_KEY,

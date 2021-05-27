@@ -1,5 +1,6 @@
 const passport = require("passport"); // Import passport
 const LocalStrategy = require("passport-local").Strategy; // Import LocalStrategy
+const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import GoogleStrategy
 const bcrypt = require("bcrypt"); // Import bcrypt (excrypt and comparePassword)
 const JWTstrategy = require("passport-jwt").Strategy; // Import JWT Strategy
 const ExtractJWT = require("passport-jwt").ExtractJwt; // Import ExtractJWT
@@ -134,7 +135,6 @@ passport.use(
           message: "User can sign in",
         });
       } catch (e) {
-        console.log(e);
         // If create user failed, it will make
         // err = null
         // user = false
@@ -310,6 +310,38 @@ passport.use(
           message: "You're not authorized",
         });
       } catch (e) {
+        return done(null, false, {
+          message: "You're not authorized",
+        });
+      }
+    }
+  )
+);
+
+// Use the GoogleStrategy within Passport.
+//   Strategies in Passport require a `verify` function, which accept
+//   credentials (in this case, an accessToken, refreshToken, and Google
+//   profile), and invoke a callback with a user object.
+passport.use(
+  "google",
+  new GoogleStrategy(
+    {
+      clientID: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+    },
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let userGoogle = await user.findOrCreate({
+          where: { email: profile.emails[0].value },
+          defaults: {
+            name: profile.displayName,
+            role: "user",
+          },
+        });
+
+        return done(null, userGoogle[0]);
+      } catch (error) {
         return done(null, false, {
           message: "You're not authorized",
         });
