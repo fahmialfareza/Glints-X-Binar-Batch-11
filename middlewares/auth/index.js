@@ -1,6 +1,6 @@
 const passport = require("passport"); // Import passport
+const LocalStrategy = require("passport-local").Strategy; // Import localStrategy
 const GoogleStrategy = require("passport-google-oauth20").Strategy; // Import GoogleStrategy
-const TwitterStrategy = require("passport-twitter").Strategy;
 const bcrypt = require("bcrypt"); // Import bcrypt (excrypt and comparePassword)
 const JWTstrategy = require("passport-jwt").Strategy; // Import JWT Strategy
 const ExtractJWT = require("passport-jwt").ExtractJwt; // Import ExtractJWT
