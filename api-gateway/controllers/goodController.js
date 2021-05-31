@@ -1,18 +1,12 @@
 const axios = require("axios");
 
-class AuthController {
-  async auth(req, res, next) {
+class GoodController {
+  async good(req, res, next) {
     try {
-      if (
-        req.url === "/signin" ||
-        "/signup" ||
-        "/isAdmin" ||
-        "/isUser" ||
-        "/isAdminOrUser"
-      ) {
+      if (req.url === "/") {
         let config = {
           method: req.method,
-          url: `${process.env.AUTH_SERVICE_URL}${req.originalUrl}`,
+          url: `${process.env.GOOD_SERVICE_URL}${req.originalUrl}`,
         };
 
         if (req.body) {
@@ -42,4 +36,4 @@ class AuthController {
   }
 }
 
-module.exports = new AuthController();
+module.exports = new GoodController();

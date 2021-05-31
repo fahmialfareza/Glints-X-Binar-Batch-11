@@ -32,6 +32,16 @@ class AuthController {
       return next(e);
     }
   }
+
+  async getIdUser(req, res, next) {
+    try {
+      return res.status(200).json({
+        id: req.user.id,
+      });
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
 
 module.exports = new AuthController();

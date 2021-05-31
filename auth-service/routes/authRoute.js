@@ -28,4 +28,13 @@ router.post(
   authController.getToken
 );
 
+// Check admin or not
+router.get("/isAdmin", auth.admin, authController.getIdUser);
+
+// Check user or not
+router.get("/isUser", auth.user, authController.getIdUser);
+
+// Check admin or user
+router.get("/isAdminOrUser", auth.adminOrUser, authController.getIdUser);
+
 module.exports = router;
