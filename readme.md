@@ -1,3 +1,5 @@
-This repository is repository for Glints X Binar Batch 11 - Backend Class
+# Microservices
+Create microservices with Express.js and API Gateway.
 
-Created by All Student of Glints Academy Batch 11 (Backend)
+# What will we create?
+We will create some services such as Auth service, Good service, and Transaction service.

@@ -1,7 +1,0 @@
-node_modules/
-public/images/
-.env.development
-.env.test
-Rewind Class/
-coverage
-.DS_Store
