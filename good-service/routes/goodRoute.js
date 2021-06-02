@@ -11,18 +11,17 @@ const goodValidator = require("../middlewares/validators/goodValidator");
 // Import controller
 const goodController = require("../controllers/goodController");
 
-// Get All
-router.get("/", isAdminOrUser, goodController.getAll);
+router
+  .route("/")
+  .get(goodController.getAll)
+  .post(isAdmin, goodValidator.create, uploadImage, goodController.create);
 
-// If POST (/good), will go to imageUpload first
-// Then, go to transaksiValidator.create
-// If in the transaksiValidator.create can run the next(), it will go to transaksiController.create
-router.post(
-  "/",
-  isAdmin,
-  goodValidator.create,
-  uploadImage,
-  goodController.create
-);
+router.get("/search", goodController.search);
+
+router
+  .route("/:id")
+  .get(goodController.getOne)
+  .put(isAdmin, goodValidator.update, uploadImage, goodController.update)
+  .delete(isAdmin, goodController.delete);
 
 module.exports = router; // Export router
