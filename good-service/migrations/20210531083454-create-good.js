@@ -8,9 +8,18 @@ module.exports = {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
       },
+      id_user: {
+        allowNull: false,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+      },
       name: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      description: {
+        allowNull: false,
+        type: Sequelize.TEXT,
       },
       price: {
         allowNull: false,
