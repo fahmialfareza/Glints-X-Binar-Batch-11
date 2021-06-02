@@ -4,7 +4,11 @@ const FormData = require("form-data");
 class GoodController {
   async good(req, res, next) {
     try {
-      if (req.url === "/") {
+      if (
+        req.url === "/" ||
+        req.url.length === 37 ||
+        req.url.includes("/search")
+      ) {
         let config = {
           method: req.method,
           url: `${process.env.GOOD_SERVICE_URL}${req.originalUrl}`,
@@ -19,9 +23,11 @@ class GoodController {
           data.append("name", req.body.name);
           data.append("price", req.body.price);
           data.append("description", req.body.description);
-          data.append("image", Buffer.from(req.files.image.data), {
-            filename: req.files.image.name,
-          });
+          if (req.files) {
+            data.append("image", Buffer.from(req.files.image.data), {
+              filename: req.files.image.name,
+            });
+          }
 
           config.data = data;
           config.headers = {

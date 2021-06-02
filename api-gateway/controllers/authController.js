@@ -5,10 +5,12 @@ class AuthController {
     try {
       if (
         req.url === "/signin" ||
-        "/signup" ||
-        "/isAdmin" ||
-        "/isUser" ||
-        "/isAdminOrUser"
+        req.url === "/signup" ||
+        req.url === "/isAdmin" ||
+        req.url === "/isUser" ||
+        req.url === "/isAdminOrUser" ||
+        req.url === "/me" ||
+        req.url.length === 45
       ) {
         let config = {
           method: req.method,
