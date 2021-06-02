@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require("path");
 // Express
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const errorHandler = require("./middlewares/errorHandler");
 
 const app = express();
@@ -28,6 +29,9 @@ app.use(
     extended: true,
   })
 ); // support encoded bodies
+
+// To read form-data request
+app.use(fileUpload());
 
 // Prevent XSS attact
 app.use(xss());

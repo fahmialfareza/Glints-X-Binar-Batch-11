@@ -1,4 +1,5 @@
 const axios = require("axios");
+const FormData = require("form-data");
 
 class GoodController {
   async good(req, res, next) {
@@ -9,13 +10,30 @@ class GoodController {
           url: `${process.env.GOOD_SERVICE_URL}${req.originalUrl}`,
         };
 
-        if (req.body) {
-          config.data = JSON.stringify(req.body);
-          config.headers = { "Content-Type": "application/json" };
+        if (req.headers.authorization) {
+          config.headers = { Authorization: req.headers.authorization };
         }
 
-        if (req.headers.authorization) {
-          config.headers.Authorization = req.headers.authorization;
+        if (req.headers["content-type"]?.includes("multipart/form-data")) {
+          let data = new FormData();
+          data.append("name", req.body.name);
+          data.append("price", req.body.price);
+          data.append("description", req.body.description);
+          data.append("image", Buffer.from(req.files.image.data), {
+            filename: req.files.image.name,
+          });
+
+          config.data = data;
+          config.headers = {
+            ...config.headers,
+            ...data.getHeaders(),
+          };
+        } else if (req.body) {
+          config.data = JSON.stringify(req.body);
+          config.headers = {
+            ...config.headers,
+            "Content-Type": "application/json",
+          };
         }
 
         const response = await axios(config);
@@ -28,10 +46,7 @@ class GoodController {
         statusCode: 404,
       });
     } catch (e) {
-      return next({
-        message: e.response.data.message,
-        statusCode: e.response.status,
-      });
+      return next(e);
     }
   }
 }

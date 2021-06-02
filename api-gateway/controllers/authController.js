@@ -34,10 +34,7 @@ class AuthController {
         statusCode: 404,
       });
     } catch (e) {
-      return next({
-        message: e.response.data.message,
-        statusCode: e.response.status,
-      });
+      return next(e);
     }
   }
 }
