@@ -302,7 +302,7 @@ passport.use(
           userSignIn.role.includes("user") ||
           userSignIn.role.includes("admin")
         ) {
-          return done(null, token.user);
+          return done(null, { ...token.user, role: userSignIn.role });
         }
 
         return done(null, false, {
