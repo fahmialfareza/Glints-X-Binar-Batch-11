@@ -1,0 +1,31 @@
+# We have 2 stage Test and Deploy
+stages:
+  - deploy
+
+# Deploy job
+deploy:
+  type: deploy
+  # Attach Deploy job to Deploy stage
+  stage: deploy
+  # Config to use our Runner with Executor Shell
+  tags:
+    - auth-service
+  script:
+    # Only copy changed files to project folder
+    - cp -r -u * .sequelizerc $PROJECT_DIR_AUTH
+    - cd $PROJECT_DIR_AUTH
+    - echo "MYSQL_USERNAME"=$MYSQL_USERNAME > .env.production
+    - echo "MYSQL_PASSWORD"=$MYSQL_PASSWORD >> .env.production
+    - echo "MYSQL_DATABASE"=$MYSQL_DATABASE_PRODUCTION >> .env.production
+    - echo "MYSQL_HOST"=$MYSQL_HOST >> .env.production
+    - echo "JWT_SECRET"=$JWT_SECRET >> .env.production
+    - echo "PORT"=$PORT >> .env.production
+    # - yarn install
+    - npm i
+    - NODE_ENV=production sequelize db:create # create database test
+    - NODE_ENV=production sequelize db:migrate # create migration
+    # Restart NodeJS service
+    - npm run stop
+    - npm run start
+  only:
+    - auth-service
