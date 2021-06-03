@@ -12,7 +12,7 @@ deploy:
     - api-gateway
   script:
     # Only copy changed files to project folder
-    - cp -r -u * .sequelizerc $PROJECT_DIR_API_GATEWAY
+    - cp -r -u * $PROJECT_DIR_API_GATEWAY
     - cd $PROJECT_DIR_API_GATEWAY
     - echo "AUTH_SERVICE_URL"=$AUTH_SERVICE_URL > .env.production
     - echo "GOOD_SERVICE_URL"=$GOOD_SERVICE_URL >> .env.production
