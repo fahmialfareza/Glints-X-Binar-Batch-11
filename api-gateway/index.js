@@ -21,6 +21,7 @@ const morgan = require("morgan");
 // Import routes
 const authRoute = require("./routes/authRoute");
 const goodRoute = require("./routes/goodRoute");
+const transactionRoute = require("./routes/transactionRoute");
 
 //Set body parser for HTTP post operation
 app.use(express.json()); // support json encoded bodies
@@ -74,6 +75,7 @@ if (process.env.NODE_ENV === "development") {
 
 app.use("/auth", authRoute);
 app.use("/goods", goodRoute);
+app.use("/transactions", transactionRoute);
 
 app.use(errorHandler);
 
