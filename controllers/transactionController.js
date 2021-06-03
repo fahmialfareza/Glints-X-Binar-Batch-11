@@ -3,7 +3,7 @@ const axios = require("axios");
 class TransactionController {
   async transaction(req, res, next) {
     try {
-      if ((req.url === "/", req.url.length === 25)) {
+      if (req.url === "/" || req.url.length === 25) {
         let config = {
           method: req.method,
           url: `${process.env.TRANSACTION_SERVICE_URL}${req.originalUrl}`,
