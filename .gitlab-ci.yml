@@ -1,0 +1,35 @@
+# We have 2 stage Test and Deploy
+stages:
+  - deploy
+
+# Deploy job
+deploy:
+  type: deploy
+  # Attach Deploy job to Deploy stage
+  stage: deploy
+  # Config to use our Runner with Executor Shell
+  tags:
+    - good-service
+  script:
+    # Only copy changed files to project folder
+    - cp -r -u * .sequelizerc $PROJECT_DIR_GOOD
+    - cd $PROJECT_DIR_GOOD
+    - echo "POSTGRES_USERNAME"=$POSTGRES_USERNAME > .env.production
+    - echo "POSTGRES_PASSWORD"=$POSTGRES_PASSWORD >> .env.production
+    - echo "POSTGRES_DATABASE"=$POSTGRES_DATABASE >> .env.production
+    - echo "POSTGRES_HOST"=$POSTGRES_HOST >> .env.production
+    - echo "S3_ACCESS_KEY"=$S3_ACCESS_KEY >> .env.production
+    - echo "S3_SECRET_KEY"=$S3_SECRET_KEY >> .env.production
+    - echo "S3_BUCKET"=$S3_BUCKET >> .env.production
+    - echo "S3_URL"=$S3_URL >> .env.production
+    - echo "PORT"=$PORT >> .env.production
+    - echo "API_GATEWAY_URL"=$API_GATEWAY_URL >> .env.production
+    # - yarn install
+    - npm i
+    - NODE_ENV=production sequelize db:create # create database test -- mariadb doesn't support db:create/db:drop
+    - NODE_ENV=production sequelize db:migrate # create migration
+    # Restart NodeJS service
+    - npm run stop || true
+    - npm run start
+  only:
+    - good-service
