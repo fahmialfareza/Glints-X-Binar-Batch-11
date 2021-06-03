@@ -26,7 +26,7 @@ deploy:
     - echo "API_GATEWAY_URL"=$API_GATEWAY_URL >> .env.production
     # - yarn install
     - npm i
-    - NODE_ENV=production sequelize db:create # create database test -- mariadb doesn't support db:create/db:drop
+    # - NODE_ENV=production sequelize db:create # create database test -- mariadb doesn't support db:create/db:drop and posgresql cannot run twice
     - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
     - npm run stop || true
