@@ -1,0 +1,15 @@
+version: "2.4"
+
+services:
+  database:
+    image: mongo:4
+    ports:
+      - 27017:27017
+    volumes:
+      - transaction:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: darwin
+      MONGO_INITDB_ROOT_PASSWORD: darwinknowless
+
+volumes:
+  transaction:
