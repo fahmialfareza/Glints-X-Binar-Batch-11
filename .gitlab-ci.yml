@@ -22,8 +22,8 @@ deploy:
     - echo "PORT"=$PORT >> .env.production
     # - yarn install
     - npm i
-    - NODE_ENV=production npx sequelize db:create # create database test
-    - NODE_ENV=production npx sequelize db:migrate # create migration
+    - NODE_ENV=production sequelize db:create # create database test
+    - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
     - npm run stop
     - npm run start
