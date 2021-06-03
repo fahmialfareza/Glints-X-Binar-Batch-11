@@ -1,0 +1,27 @@
+# We have 2 stage Test and Deploy
+stages:
+  - deploy
+
+# Deploy job
+deploy:
+  type: deploy
+  # Attach Deploy job to Deploy stage
+  stage: deploy
+  # Config to use our Runner with Executor Shell
+  tags:
+    - api-gateway
+  script:
+    # Only copy changed files to project folder
+    - cp -r -u * .sequelizerc $PROJECT_DIR_API_GATEWAY
+    - cd $PROJECT_DIR_API_GATEWAY
+    - echo "AUTH_SERVICE_URL"=$AUTH_SERVICE_URL > .env.production
+    - echo "GOOD_SERVICE_URL"=$GOOD_SERVICE_URL >> .env.production
+    - echo "TRANSACTION_SERVICE_URL"=$TRANSACTION_SERVICE_URL >> .env.production
+    - echo "PORT"=$PORT >> .env.production
+    # - yarn install
+    - npm i
+    # Restart NodeJS service
+    - npm run stop || true
+    - npm run start
+  only:
+    - api-gateway
