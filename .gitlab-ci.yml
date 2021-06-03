@@ -25,7 +25,7 @@ deploy:
     # - NODE_ENV=production sequelize db:create # create database test -- mariadb doesn't support db:create/db:drop
     - NODE_ENV=production sequelize db:migrate # create migration
     # Restart NodeJS service
-    - npm run stop
+    - npm run stop || true
     - npm run start
   only:
     - auth-service
