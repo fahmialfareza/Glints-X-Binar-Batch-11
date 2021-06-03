@@ -12,7 +12,7 @@ deploy:
     - transaction-service
   script:
     # Only copy changed files to project folder
-    - cp -r -u * .sequelizerc $PROJECT_DIR_TRANSACTION
+    - cp -r -u * $PROJECT_DIR_TRANSACTION
     - cd $PROJECT_DIR_TRANSACTION
     - echo "MONGO_URI"=$MONGO_URI > .env.production
     - echo "API_GATEWAY_URL"=$API_GATEWAY_URL >> .env.production
