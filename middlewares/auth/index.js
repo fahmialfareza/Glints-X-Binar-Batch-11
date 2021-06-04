@@ -336,6 +336,7 @@ passport.use(
           where: { email: profile.emails[0].value },
           defaults: {
             name: profile.displayName,
+            password: "",
             role: "user",
           },
         });

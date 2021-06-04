@@ -29,6 +29,8 @@ router.post(
   authController.getToken
 );
 
+router.get("/me", auth.adminOrUser, authController.getMe);
+
 // GET /auth/google
 //   Use passport.authenticate() as route middleware to authenticate the
 //   request.  The first step in Google authentication will involve
